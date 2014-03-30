@@ -37,13 +37,7 @@
     NSMutableDictionary *keyDict = [[NSMutableDictionary alloc] init];
     for (NSString *prop in array)
     {
-        [keyDict setValue:prop forKey:prop];
-        [keyDict setValue:prop forKey:[prop lowercaseString]];
-        [keyDict setValue:prop forKey:[prop capitalizedString]];
-        [keyDict setValue:prop forKey:[prop uppercaseString]];
-        NSString *firstLetter = [[prop substringToIndex:1] uppercaseString];
-        NSString *firstLetterUppercase = [NSString stringWithFormat:@"%@%@", firstLetter, [prop substringFromIndex:1]];
-        [keyDict setValue:prop forKey:firstLetterUppercase];
+        [self addSimilarStringsToDictionary:keyDict forString:prop];
         
         int indexOfUppercase = 0;
         for (int i = 0; i < prop.length && indexOfUppercase == 0; i++)
@@ -54,17 +48,36 @@
         }
         if (indexOfUppercase > 0)
         {
-            NSString *firstWord = [prop substringWithRange:NSMakeRange(0, indexOfUppercase)];
-            [keyDict setValue:prop forKey:firstWord];
-            [keyDict setValue:prop forKey:[firstWord lowercaseString]];
-            [keyDict setValue:prop forKey:[firstWord capitalizedString]];
-            [keyDict setValue:prop forKey:[firstWord uppercaseString]];
-            firstLetter = [[firstWord substringToIndex:1] uppercaseString];
-            firstLetterUppercase = [NSString stringWithFormat:@"%@%@", firstLetter, [firstWord substringFromIndex:1]];
-            [keyDict setValue:prop forKey:firstLetterUppercase];
+            NSString *firstWord = [prop substringToIndex:indexOfUppercase];
+            [self addSimilarStringsToDictionary:keyDict forString:firstWord];
+            
+            NSMutableString *underscoredWords = [NSMutableString stringWithString:prop];
+            while (indexOfUppercase < [underscoredWords length])
+            {
+                if ([[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[underscoredWords characterAtIndex:indexOfUppercase]])
+                {
+                    [underscoredWords insertString:@"_" atIndex:indexOfUppercase];
+                    indexOfUppercase++;
+                }
+                indexOfUppercase++;
+            }
+            [self addSimilarStringsToDictionary:keyDict forString:underscoredWords];
         }
     }
     return [NSDictionary dictionaryWithDictionary:keyDict];
+}
+
+#pragma mark - Private Methods
+
++ (void)addSimilarStringsToDictionary:(NSMutableDictionary *)dictionary forString:(NSString *)string
+{
+    [dictionary setValue:string forKey:string];
+    [dictionary setValue:string forKey:[string lowercaseString]];
+    [dictionary setValue:string forKey:[string capitalizedString]];
+    [dictionary setValue:string forKey:[string uppercaseString]];
+    NSString *firstLetter = [[string substringToIndex:1] uppercaseString];
+    NSString *firstLetterUppercase = [NSString stringWithFormat:@"%@%@", firstLetter, [string substringFromIndex:1]];
+    [dictionary setValue:string forKey:firstLetterUppercase];
 }
 
 @end

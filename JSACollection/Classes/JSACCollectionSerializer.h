@@ -14,7 +14,9 @@
 
 /** Standard types include: NSString, NSURL, NSDictionary. 
     Setting this allows the model object to be created using 
-    types that aren't standard. This may cause errors when deserialzing.
+    types that aren't standard. This will attempt to map the 
+    values for the matching key to the object of the non-standard 
+    type. This may cause errors when deserialzing.
  
     By default this is set to NO. 
  **/

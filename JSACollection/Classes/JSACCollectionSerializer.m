@@ -13,6 +13,8 @@
 #import "JSACKeyGenerator.h"
 #import "JSACLayerFinder.h"
 
+static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
+
 @implementation JSACCollectionSerializer
 
 #pragma mark - Class Methods
@@ -53,7 +55,10 @@
 - (NSArray *)generateModelObjectsWithSerializableClass:(Class)class fromContainer:(id)container withPropertyDictionary:(NSDictionary *)propertyDictionary
 {
     if (![JSACCollectionFactory usableTypeOfCollection:container])
+    {
+        NSAssert(YES, @"The container should be of type NSDictionary or NSArray.");
         return [NSArray array];
+    }
     
     NSArray *keyList = [propertyDictionary allKeys];
     
@@ -111,7 +116,7 @@
 
 - (BOOL)setupModelArrayIfNecessaryWithValue:(id)value forKey:(NSString *)key onObject:(id)object
 {
-    NSString *modelArrayString = [NSString stringWithFormat:@"MODEL_ARRAY_%@", key];
+    NSString *modelArrayString = [NSString stringWithFormat:kJSACollectionModelArrayPrefix, key];
     BOOL exists = NO;
     NSArray *keyList = [object listOfProperties];
     for (NSString *k in keyList)

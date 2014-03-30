@@ -12,6 +12,7 @@
 #import "JSACSerializableClassFactory.h"
 #import "JSACKeyGenerator.h"
 #import "JSACLayerFinder.h"
+#import <objc/message.h>
 
 static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
@@ -55,8 +56,8 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     
     if ([class respondsToSelector:@selector(JSONKeyMapping)])
     {
-        IMP JSONKeyIMP = [class methodForSelector:@selector(JSONKeyMapping)];
-        keyDict = ((NSDictionary * (*) (id, SEL))JSONKeyIMP)(class,@selector(JSONKeyMapping));
+        keyDict = objc_msgSend(class, @selector(JSONKeyMapping));
+        NSAssert(keyDict, @"Custom implementation of JSONKeyMapping must not return a nil dictionary.");
     }
     else if (self.allowNonStandardTypes)
     {
@@ -65,6 +66,11 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     else
     {
         keyDict = [JSACKeyGenerator standardKeyListFromClass:class];
+    }
+    
+    if (!keyDict || ![keyDict count])
+    {
+        return [NSArray array];
     }
     
     return [self generateModelObjectsWithSerializableClass:class fromContainer:container withPropertyDictionary:keyDict];

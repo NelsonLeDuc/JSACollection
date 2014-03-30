@@ -15,6 +15,12 @@
 
 static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
+@interface NSObject (JSACollectionCategory)
+
++ (NSDictionary *)JSONKeyMapping;
+
+@end
+
 @implementation JSACCollectionSerializer
 
 #pragma mark - Class Methods
@@ -45,9 +51,21 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
 - (NSArray *)generateModelObjectsWithSerializableClass:(Class)class fromContainer:(id)container
 {
-    NSDictionary *keyDict = [JSACKeyGenerator standardKeyListFromClass:class];
-    if (self.allowNonStandardTypes)
+    NSDictionary *keyDict;
+    
+    if ([class respondsToSelector:@selector(JSONKeyMapping)])
+    {
+        IMP JSONKeyIMP = [class methodForSelector:@selector(JSONKeyMapping)];
+        keyDict = ((NSDictionary * (*) (id, SEL))JSONKeyIMP)(class,@selector(JSONKeyMapping));
+    }
+    else if (self.allowNonStandardTypes)
+    {
         keyDict = [JSACKeyGenerator keyListFromClass:class];
+    }
+    else
+    {
+        keyDict = [JSACKeyGenerator standardKeyListFromClass:class];
+    }
     
     return [self generateModelObjectsWithSerializableClass:class fromContainer:container withPropertyDictionary:keyDict];
 }

@@ -18,7 +18,7 @@
     return ([self collectionWithObject:collection] != nil);
 }
 
-+ (JSACCollection*)collectionWithObject:(id)collection
++ (JSACCollection *)collectionWithObject:(id)collection
 {
     if ([collection isKindOfClass:[NSArray class]])
     {
@@ -41,7 +41,7 @@
     NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
     for (id obj in collection)
     {
-        JSACCollection* coll = [collection subCollectionFromKey:obj];
+        JSACCollection *coll = [collection subCollectionFromKey:obj];
         if (coll)
             [mutableArray addObject:coll];
     }

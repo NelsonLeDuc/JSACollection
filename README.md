@@ -4,8 +4,8 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 ## First Steps
 
-- [Download JSACollection](http://www.google.com/) and look at the sample iPhone/iPad app.
-- Check the file headers and the [Guide](https://www.google.com/)
+- [Download JSACollection](https://github.com/NelsonLeDuc/JSACollection/archive/master.zip) and look at the sample iPhone/iPad app.
+- Check the file headers and read the guide below
 - Comment or create pull requests to fix issues and get new features implemented.
 
 ## Installation

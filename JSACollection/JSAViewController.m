@@ -7,6 +7,8 @@
 //
 
 #import "JSAViewController.h"
+#import "JSACCollectionSerializer.h"
+#import "JSATestModelObject.h"
 
 @interface JSAViewController ()
 
@@ -17,13 +19,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    
+    /* I am performing this test in view did load, typically this 
+     should occur on a background thread when coming back from a network
+     request for JSON or file read for a plist.
+     */
+    NSArray *testCollection = @[ @{ @"name_string": @"Bob Jones",
+                                      @"TESTURL" : @"http://www.google.com",
+                                      @"randomArray" : @[ @1, @2, @3 ] },
+                                 @{ @"name_string": @"Bob Jones",
+                                    @"TESTURL" : @"http://www.google.com",
+                                    @"randomArray" : @[ @1, @2, @3 ] } ];
+    
+    NSArray *testModelArray = [[JSACCollectionSerializer sharedInstance] generateModelObjectsWithSerializableClass:[JSATestModelObject class] fromContainer:testCollection];
+    
+    NSLog(@"%d", [testModelArray count]);
+    
 }
 
 @end

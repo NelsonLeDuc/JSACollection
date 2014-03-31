@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5234696318EA0EBA0072B094 /* JSATestModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5234696218EA0EBA0072B094 /* JSATestModelObject.m */; };
 		52702C4018E831860017F36D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52702C3F18E831860017F36D /* Foundation.framework */; };
 		52702C4218E831860017F36D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52702C4118E831860017F36D /* CoreGraphics.framework */; };
 		52702C4418E831860017F36D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52702C4318E831860017F36D /* UIKit.framework */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5234696118EA0EBA0072B094 /* JSATestModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSATestModelObject.h; sourceTree = "<group>"; };
+		5234696218EA0EBA0072B094 /* JSATestModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSATestModelObject.m; sourceTree = "<group>"; };
 		52702C3C18E831860017F36D /* JSACollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSACollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52702C3F18E831860017F36D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		52702C4118E831860017F36D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -141,6 +144,8 @@
 			children = (
 				52702C4E18E831860017F36D /* JSAAppDelegate.h */,
 				52702C4F18E831860017F36D /* JSAAppDelegate.m */,
+				5234696118EA0EBA0072B094 /* JSATestModelObject.h */,
+				5234696218EA0EBA0072B094 /* JSATestModelObject.m */,
 				52702C5418E831860017F36D /* JSAViewController.h */,
 				52702C5518E831860017F36D /* JSAViewController.m */,
 				52702C9618E832330017F36D /* JSAViewController.xib */,
@@ -340,6 +345,7 @@
 				52702C4C18E831860017F36D /* main.m in Sources */,
 				52702C9018E831D70017F36D /* JSACCollection.m in Sources */,
 				52702C8E18E831D70017F36D /* NSObject+ListOfProperties.m in Sources */,
+				5234696318EA0EBA0072B094 /* JSATestModelObject.m in Sources */,
 				52702C9218E831D70017F36D /* JSACCollectionFactory.m in Sources */,
 				52702C9318E831D70017F36D /* JSACCollectionSerializer.m in Sources */,
 				52702C9418E831D70017F36D /* JSACKeyGenerator.m in Sources */,
@@ -543,6 +549,7 @@
 				52702C7018E831870017F36D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52702C7118E831870017F36D /* Build configuration list for PBXNativeTarget "JSACollectionTests" */ = {
 			isa = XCConfigurationList;
@@ -551,6 +558,7 @@
 				52702C7318E831870017F36D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

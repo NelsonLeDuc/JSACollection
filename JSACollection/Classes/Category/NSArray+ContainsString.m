@@ -18,9 +18,16 @@
 - (BOOL)containsString:(NSString *)string ignoreCase:(BOOL)ignoreCase
 {
     if (![string respondsToSelector:@selector(lowercaseString)])
+    {
         return NO;
-    for (NSString *s in self) {
-        if ([(ignoreCase ? s : [s lowercaseString]) isEqualToString:(ignoreCase ? string : [string lowercaseString])]) {
+    }
+    
+    string = (ignoreCase ? [string lowercaseString] : string);
+    for (NSString *s in self)
+    {
+        NSString *strToCheck = (ignoreCase ? [s lowercaseString] : s);
+        if ([string isEqualToString:strToCheck])
+        {
             return YES;
         }
     }

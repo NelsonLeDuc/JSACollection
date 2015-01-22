@@ -24,7 +24,12 @@
     self = [super init];
     if (self)
     {
-        _dictionary = dictionary;
+        NSMutableDictionary *normalDict = [NSMutableDictionary dictionary];
+        [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [normalDict setObject:obj forKey:[key lowercaseString]];
+        }];
+        
+        _dictionary = [normalDict copy];;
     }
     return self;
 }

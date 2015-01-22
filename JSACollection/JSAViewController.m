@@ -34,7 +34,7 @@
     
     NSArray *testModelArray = [[JSACCollectionSerializer sharedInstance] generateModelObjectsWithSerializableClass:[JSATestModelObject class] fromContainer:testCollection];
     
-    NSLog(@"%d", [testModelArray count]);
+    NSLog(@"%@", @([testModelArray count]));
     
 }
 

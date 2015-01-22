@@ -56,7 +56,7 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     
     if ([class respondsToSelector:@selector(JSONKeyMapping)])
     {
-        keyDict = objc_msgSend(class, @selector(JSONKeyMapping));
+        keyDict = [class JSONKeyMapping];
         NSAssert(keyDict, @"Custom implementation of JSONKeyMapping must not return a nil dictionary.");
     }
     else if (self.allowNonStandardTypes)
@@ -95,10 +95,20 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     
     for (id model in modelContainer)
     {
+        id normalizedModel = model;
+        if ([normalizedModel isKindOfClass:[NSDictionary class]])
+        {
+            NSMutableDictionary *normalDict = [NSMutableDictionary dictionary];
+            [normalizedModel enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                [normalDict setObject:obj forKey:[key lowercaseString]];
+            }];
+            normalizedModel = normalDict;
+        }
+        
         modelObject = [[class alloc] init];
         for (NSString *key in [propertyDictionary allKeys])
         {
-            id value = [model valueForKey:key];
+            id value = [normalizedModel valueForKey:[key lowercaseString]];
             if (value)
             {
                 NSString *objectKey = [propertyDictionary valueForKey:key];

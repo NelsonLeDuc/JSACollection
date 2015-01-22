@@ -45,7 +45,7 @@
         if (coll)
             [mutableArray addObject:coll];
     }
-#warning VERY HACKY. Need to determine a better method of determining if this layer is the main one.
+
     if (ABS([mutableArray count] - [collection count]) > 5)
         mutableArray = [NSMutableArray arrayWithObject:collection];
     return [self collectionWithObject:mutableArray];

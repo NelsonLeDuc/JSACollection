@@ -9,6 +9,8 @@
 #import "JSACKeyGenerator.h"
 #import "NSObject+ListOfProperties.h"
 
+static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
+
 @implementation JSACKeyGenerator
 
 + (NSDictionary *)keyListFromClass:(Class)class
@@ -35,9 +37,15 @@
 + (NSDictionary *)generatedKeyListFromArray:(NSArray *)array
 {
     NSMutableDictionary *keyDict = [[NSMutableDictionary alloc] init];
-    for (NSString *prop in array)
+    for (NSString *propertyName in array)
     {
-        [self addSimilarStringsToDictionary:keyDict forString:prop original:prop];
+        NSString *prop = propertyName;
+        if ([[prop lowercaseString] hasPrefix:kJSACollectionPropertyPrefix] && [prop length] > [kJSACollectionPropertyPrefix length])
+        {
+            prop = [prop substringFromIndex:[kJSACollectionPropertyPrefix length]];
+        }
+        
+        [keyDict setValue:propertyName forKey:prop];
         
         int indexOfUppercase = 0;
         for (int i = 0; i < prop.length && indexOfUppercase == 0; i++)
@@ -49,7 +57,7 @@
         if (indexOfUppercase > 0)
         {
             NSString *firstWord = [prop substringToIndex:indexOfUppercase];
-            [self addSimilarStringsToDictionary:keyDict forString:firstWord original:prop];
+            [keyDict setValue:propertyName forKey:firstWord];
             
             NSMutableString *underscoredWords = [NSMutableString stringWithString:prop];
             while (indexOfUppercase < [underscoredWords length])
@@ -61,23 +69,10 @@
                 }
                 indexOfUppercase++;
             }
-            [self addSimilarStringsToDictionary:keyDict forString:underscoredWords original:prop];
+            [keyDict setValue:propertyName forKey:underscoredWords];
         }
     }
     return [NSDictionary dictionaryWithDictionary:keyDict];
-}
-
-#pragma mark - Private Methods
-
-+ (void)addSimilarStringsToDictionary:(NSMutableDictionary *)dictionary forString:(NSString *)string original:(NSString *) original
-{
-    [dictionary setValue:original forKey:string];
-    [dictionary setValue:original forKey:[string lowercaseString]];
-    [dictionary setValue:original forKey:[string capitalizedString]];
-    [dictionary setValue:original forKey:[string uppercaseString]];
-    NSString *firstLetter = [[string substringToIndex:1] uppercaseString];
-    NSString *firstLetterUppercase = [NSString stringWithFormat:@"%@%@", firstLetter, [string substringFromIndex:1]];
-    [dictionary setValue:original forKey:firstLetterUppercase];
 }
 
 @end

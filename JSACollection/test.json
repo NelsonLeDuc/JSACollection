@@ -1,0 +1,16 @@
+{
+    "error" : "none",
+    "stuff" : [
+               {
+               "name" : "Bob Jones",
+               "testURL" : "http://www.google.com",
+               "randomArray" : [ 1, 2, 3 ]
+               },
+               {
+               "name" : "Bob Jones",
+               "testURL" : "http://www.google.com",
+               "randomArray" : [ 1, 2, 3 ]
+               }
+               ]
+}
+                                    

@@ -25,12 +25,8 @@
      should occur on a background thread when coming back from a network
      request for JSON or file read for a plist.
      */
-    NSArray *testCollection = @[ @{ @"name_string": @"Bob Jones",
-                                      @"TESTURL" : @"http://www.google.com",
-                                      @"randomArray" : @[ @1, @2, @3 ] },
-                                 @{ @"name_string": @"Bob Jones",
-                                    @"TESTURL" : @"http://www.google.com",
-                                    @"randomArray" : @[ @1, @2, @3 ] } ];
+    NSData *jsonData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"]];
+    id testCollection = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     
     NSArray *testModelArray = [[JSACCollectionSerializer sharedInstance] generateModelObjectsWithSerializableClass:[JSATestModelObject class] fromContainer:testCollection];
     

@@ -38,17 +38,8 @@
 {
     if ([collection isKindOfClass:[JSACArrayCollection class]])
         return collection;
-    NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
-    for (id obj in collection)
-    {
-        JSACCollection *coll = [collection subCollectionFromKey:obj];
-        if (coll)
-            [mutableArray addObject:coll];
-    }
-
-    if (ABS([mutableArray count] - [collection count]) > 5)
-        mutableArray = [NSMutableArray arrayWithObject:collection];
-    return [self collectionWithObject:mutableArray];
+    
+    return [self collectionWithObject:@[ collection ]];
 }
 
 @end

@@ -87,11 +87,10 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     NSArray *keyList = [propertyDictionary allKeys];
     
     id modelContainer = [JSACLayerFinder modelContainerWithProperties:keyList fromContainer:container];
-    id modelObject;
-    
-    NSMutableArray *modelObjectArray = [[NSMutableArray alloc] init];
-    
     modelContainer = [JSACCollectionFactory generateUsableCollectionFromCollection:modelContainer];
+    
+    id modelObject;
+    NSMutableArray *modelObjectArray = [[NSMutableArray alloc] init];
     
     for (id model in modelContainer)
     {
@@ -106,7 +105,7 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
         }
         
         modelObject = [[class alloc] init];
-        for (NSString *key in [propertyDictionary allKeys])
+        for (NSString *key in keyList)
         {
             id value = [normalizedModel valueForKey:[key lowercaseString]];
             if (value)

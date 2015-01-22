@@ -8,6 +8,7 @@
 
 #import "JSACLayerFinder.h"
 #import "JSACCollection.h"
+#import "JSACDictionaryCollection.h"
 #import "JSACCollectionFactory.h"
 #import "NSArray+ContainsString.h"
 
@@ -30,7 +31,12 @@
                 obj = [self containerWithModelObjectProperties:propertyList fromCollection:[collection subCollectionFromKey:key] withPreviousLayer:collection];
         }
         else
-            return layer;
+        {
+            if (![layer isKindOfClass:[JSACDictionaryCollection class]])
+                return layer;
+            
+            return collection;
+        }
     }
     if (obj)
     {

@@ -7,7 +7,7 @@
 //
 
 #import "JSAViewController.h"
-#import "JSACCollectionSerializer.h"
+#import "JSACollection.h"
 #import "JSATestModelObject.h"
 
 @interface JSAViewController ()

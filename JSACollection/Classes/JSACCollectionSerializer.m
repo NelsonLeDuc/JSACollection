@@ -12,7 +12,6 @@
 #import "JSACSerializableClassFactory.h"
 #import "JSACKeyGenerator.h"
 #import "JSACLayerFinder.h"
-#import <objc/message.h>
 
 static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 

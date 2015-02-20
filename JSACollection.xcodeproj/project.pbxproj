@@ -44,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3987680B1A96CE29004E8EC5 /* JSACollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSACollection.h; sourceTree = "<group>"; };
 		39A7E06E1A71A07000031D88 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		5234696118EA0EBA0072B094 /* JSATestModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSATestModelObject.h; sourceTree = "<group>"; };
 		5234696218EA0EBA0072B094 /* JSATestModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSATestModelObject.m; sourceTree = "<group>"; };
@@ -200,6 +201,7 @@
 				52702C8818E831D70017F36D /* JSACLayerFinder.h */,
 				52702C8918E831D70017F36D /* JSACLayerFinder.m */,
 				52702C8A18E831D70017F36D /* JSACMacros.h */,
+				3987680B1A96CE29004E8EC5 /* JSACollection.h */,
 				52702C8B18E831D70017F36D /* Protocol */,
 			);
 			path = Classes;

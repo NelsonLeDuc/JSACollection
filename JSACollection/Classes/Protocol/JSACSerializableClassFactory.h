@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@class JSACCollectionSerializer;
+
 @protocol JSACSerializableClassFactory <NSObject>
 @required
 
 - (NSArray *)listOfKeys;
-- (id)objectForDictionary:(NSDictionary *)dictionary;
+- (id)objectForDictionary:(NSDictionary *)dictionary forCollectionSerializer:(JSACCollectionSerializer *)serializer;
 
 @end

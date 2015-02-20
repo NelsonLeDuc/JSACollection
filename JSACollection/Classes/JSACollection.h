@@ -9,3 +9,4 @@
 #import "JSACCollectionSerializer.h"
 #import "JSACMacros.h"
 #import "JSACSerializableClassFactory.h"
+#import "JSACObjectMapper.h"

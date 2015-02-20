@@ -14,4 +14,6 @@
 + (NSDictionary *)standardKeyListFromClass:(Class)class;
 + (NSDictionary *)nonStandardKeyListFromClass:(Class)class;
 
++ (NSDictionary *)generatedKeyListFromArray:(NSArray *)array;
+
 @end

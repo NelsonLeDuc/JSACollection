@@ -7,13 +7,9 @@
 //
 
 #import "JSACCollectionSerializer.h"
-#import "JSACCollectionFactory.h"
-#import "NSObject+ListOfProperties.h"
 #import "JSACSerializableClassFactory.h"
-#import "JSACKeyGenerator.h"
 #import "JSACLayerFinder.h"
-
-static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
+#import "JSACObjectMapper.h"
 
 @interface NSObject (JSACollectionCategory)
 
@@ -51,78 +47,10 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
 - (NSArray *)generateModelObjectsWithSerializableClass:(Class)class fromContainer:(id)container
 {
-    NSDictionary *keyDict;
+    JSACObjectMapper *objectMapper = [JSACObjectMapper objectMapperForClass:class];
+    objectMapper.allowNonStandardTypes = self.allowNonStandardTypes;
     
-    if ([class respondsToSelector:@selector(JSONKeyMapping)])
-    {
-        keyDict = [class JSONKeyMapping];
-        NSAssert(keyDict, @"Custom implementation of JSONKeyMapping must not return a nil dictionary.");
-    }
-    else if (self.allowNonStandardTypes)
-    {
-        keyDict = [JSACKeyGenerator keyListFromClass:class];
-    }
-    else
-    {
-        keyDict = [JSACKeyGenerator standardKeyListFromClass:class];
-    }
-    
-    if (!keyDict || ![keyDict count])
-    {
-        return [NSArray array];
-    }
-    
-    return [self generateModelObjectsWithSerializableClass:class fromContainer:container withPropertyDictionary:keyDict];
-}
-
-- (NSArray *)generateModelObjectsWithSerializableClass:(Class)class fromContainer:(id)container withPropertyDictionary:(NSDictionary *)propertyDictionary
-{
-    if (![JSACCollectionFactory usableTypeOfCollection:container])
-    {
-        NSAssert(YES, @"The container should be of type NSDictionary or NSArray.");
-        return [NSArray array];
-    }
-    
-    NSArray *keyList = [propertyDictionary allKeys];
-    
-    id modelContainer = [JSACLayerFinder modelContainerWithProperties:keyList fromContainer:container];
-    modelContainer = [JSACCollectionFactory generateUsableCollectionFromCollection:modelContainer];
-    
-    id modelObject;
-    NSMutableArray *modelObjectArray = [[NSMutableArray alloc] init];
-    
-    for (id model in modelContainer)
-    {
-        id normalizedModel = model;
-        if ([normalizedModel isKindOfClass:[NSDictionary class]])
-        {
-            NSMutableDictionary *normalDict = [NSMutableDictionary dictionary];
-            [normalizedModel enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                [normalDict setObject:obj forKey:[key lowercaseString]];
-            }];
-            normalizedModel = normalDict;
-        }
-        
-        modelObject = [[class alloc] init];
-        for (NSString *key in keyList)
-        {
-            id value = [normalizedModel valueForKey:[key lowercaseString]];
-            if (value)
-            {
-                NSString *objectKey = [propertyDictionary valueForKey:key];
-                if (![self setupModelArrayIfNecessaryWithValue:value forKey:objectKey onObject:modelObject])
-                {
-                    BOOL standard = [modelObject setStandardValue:value forKey:objectKey];
-                    if (!standard && self.allowNonStandardTypes)
-                        [self setNonStandardValue:value onObject:modelObject forKey:[propertyDictionary valueForKey:key]];
-                }
-            }
-            
-        }
-        [modelObjectArray addObject:modelObject];
-    }
-    
-    return [NSArray arrayWithArray:modelObjectArray];
+    return [self generateModelObjectsWithSerializableClassFactory:objectMapper fromContainer:container];
 }
 
 - (NSArray *)generateModelObjectsWithSerializableClassFactory:(id<JSACSerializableClassFactory>)serializableClassFactory fromContainer:(id)container
@@ -137,47 +65,11 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     
     for (id model in modelContainer)
     {
-        modelObject = [serializableClassFactory objectForDictionary:model];
+        modelObject = [serializableClassFactory objectForDictionary:model forCollectionSerializer:self];
         [modelObjectArray addObject:modelObject];
     }
     
     return modelObjectArray;
-}
-
-#pragma mark - Private
-
-- (BOOL)setupModelArrayIfNecessaryWithValue:(id)value forKey:(NSString *)key onObject:(id)object
-{
-    NSString *modelArrayString = [NSString stringWithFormat:kJSACollectionModelArrayPrefix, key];
-    BOOL exists = NO;
-    NSArray *keyList = [object listOfProperties];
-    for (NSString *k in keyList)
-        if ([k isEqualToString:modelArrayString])
-            exists = YES;
-    
-    if (!exists)
-        return NO;
-    
-    Class clazz = [object classForPropertyKey:modelArrayString];
-    NSArray *array = [self generateModelObjectsWithSerializableClass:clazz fromContainer:value];
-    [object setStandardValue:array forKey:key];
-    
-    return YES;
-}
-
-
-- (BOOL)setNonStandardValue:(id)value onObject:(id)object forKey:(NSString *)key
-{
-    Class clazz = [object classForPropertyKey:key];
-    NSArray *array = [self generateModelObjectsWithSerializableClass:clazz fromContainer:value];
-    if (array)
-        if (key)
-            if ([array firstObject])
-            {
-                [object setValue:[array firstObject] forKey:key];
-                return YES;
-            }
-    return NO;
 }
 
 @end

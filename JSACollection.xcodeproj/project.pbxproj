@@ -7,7 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3987680E1A96D2BF004E8EC5 /* JSACObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987680D1A96D2BF004E8EC5 /* JSACObjectMapper.m */; };
+		398768301A96FEDC004E8EC5 /* NSArray+ContainsString.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768151A96FEDC004E8EC5 /* NSArray+ContainsString.m */; };
+		398768311A96FEDC004E8EC5 /* NSObject+ListOfProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768171A96FEDC004E8EC5 /* NSObject+ListOfProperties.m */; };
+		398768321A96FEDC004E8EC5 /* JSACArrayCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987681A1A96FEDC004E8EC5 /* JSACArrayCollection.m */; };
+		398768331A96FEDC004E8EC5 /* JSACCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987681C1A96FEDC004E8EC5 /* JSACCollection.m */; };
+		398768341A96FEDC004E8EC5 /* JSACDictionaryCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987681E1A96FEDC004E8EC5 /* JSACDictionaryCollection.m */; };
+		398768351A96FEDC004E8EC5 /* JSACCollectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768211A96FEDC004E8EC5 /* JSACCollectionFactory.m */; };
+		398768361A96FEDC004E8EC5 /* JSACKeyGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768231A96FEDC004E8EC5 /* JSACKeyGenerator.m */; };
+		398768371A96FEDC004E8EC5 /* JSACLayerFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768251A96FEDC004E8EC5 /* JSACLayerFinder.m */; };
+		398768381A96FEDC004E8EC5 /* JSACCollectionSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768281A96FEDC004E8EC5 /* JSACCollectionSerializer.m */; };
+		398768391A96FEDC004E8EC5 /* JSACObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987682D1A96FEDC004E8EC5 /* JSACObjectMapper.m */; };
 		39A7E06F1A71A07000031D88 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 39A7E06E1A71A07000031D88 /* test.json */; };
 		5234696318EA0EBA0072B094 /* JSATestModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5234696218EA0EBA0072B094 /* JSATestModelObject.m */; };
 		52702C4018E831860017F36D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52702C3F18E831860017F36D /* Foundation.framework */; };
@@ -22,15 +31,6 @@
 		52702C6118E831870017F36D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52702C4318E831860017F36D /* UIKit.framework */; };
 		52702C6918E831870017F36D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52702C6718E831870017F36D /* InfoPlist.strings */; };
 		52702C6B18E831870017F36D /* JSACollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C6A18E831870017F36D /* JSACollectionTests.m */; };
-		52702C8D18E831D70017F36D /* NSArray+ContainsString.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C7718E831D60017F36D /* NSArray+ContainsString.m */; };
-		52702C8E18E831D70017F36D /* NSObject+ListOfProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C7918E831D60017F36D /* NSObject+ListOfProperties.m */; };
-		52702C8F18E831D70017F36D /* JSACArrayCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C7C18E831D60017F36D /* JSACArrayCollection.m */; };
-		52702C9018E831D70017F36D /* JSACCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C7E18E831D60017F36D /* JSACCollection.m */; };
-		52702C9118E831D70017F36D /* JSACDictionaryCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C8018E831D60017F36D /* JSACDictionaryCollection.m */; };
-		52702C9218E831D70017F36D /* JSACCollectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C8318E831D60017F36D /* JSACCollectionFactory.m */; };
-		52702C9318E831D70017F36D /* JSACCollectionSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C8518E831D70017F36D /* JSACCollectionSerializer.m */; };
-		52702C9418E831D70017F36D /* JSACKeyGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C8718E831D70017F36D /* JSACKeyGenerator.m */; };
-		52702C9518E831D70017F36D /* JSACLayerFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 52702C8918E831D70017F36D /* JSACLayerFinder.m */; };
 		52702C9718E832330017F36D /* JSAViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52702C9618E832330017F36D /* JSAViewController.xib */; };
 /* End PBXBuildFile section */
 
@@ -45,9 +45,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3987680B1A96CE29004E8EC5 /* JSACollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSACollection.h; sourceTree = "<group>"; };
-		3987680C1A96D2BF004E8EC5 /* JSACObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACObjectMapper.h; sourceTree = "<group>"; };
-		3987680D1A96D2BF004E8EC5 /* JSACObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACObjectMapper.m; sourceTree = "<group>"; };
+		398768141A96FEDC004E8EC5 /* NSArray+ContainsString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ContainsString.h"; sourceTree = "<group>"; };
+		398768151A96FEDC004E8EC5 /* NSArray+ContainsString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ContainsString.m"; sourceTree = "<group>"; };
+		398768161A96FEDC004E8EC5 /* NSObject+ListOfProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ListOfProperties.h"; sourceTree = "<group>"; };
+		398768171A96FEDC004E8EC5 /* NSObject+ListOfProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ListOfProperties.m"; sourceTree = "<group>"; };
+		398768191A96FEDC004E8EC5 /* JSACArrayCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACArrayCollection.h; sourceTree = "<group>"; };
+		3987681A1A96FEDC004E8EC5 /* JSACArrayCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACArrayCollection.m; sourceTree = "<group>"; };
+		3987681B1A96FEDC004E8EC5 /* JSACCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACCollection.h; sourceTree = "<group>"; };
+		3987681C1A96FEDC004E8EC5 /* JSACCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACCollection.m; sourceTree = "<group>"; };
+		3987681D1A96FEDC004E8EC5 /* JSACDictionaryCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACDictionaryCollection.h; sourceTree = "<group>"; };
+		3987681E1A96FEDC004E8EC5 /* JSACDictionaryCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACDictionaryCollection.m; sourceTree = "<group>"; };
+		398768201A96FEDC004E8EC5 /* JSACCollectionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACCollectionFactory.h; sourceTree = "<group>"; };
+		398768211A96FEDC004E8EC5 /* JSACCollectionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACCollectionFactory.m; sourceTree = "<group>"; };
+		398768221A96FEDC004E8EC5 /* JSACKeyGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACKeyGenerator.h; sourceTree = "<group>"; };
+		398768231A96FEDC004E8EC5 /* JSACKeyGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACKeyGenerator.m; sourceTree = "<group>"; };
+		398768241A96FEDC004E8EC5 /* JSACLayerFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACLayerFinder.h; sourceTree = "<group>"; };
+		398768251A96FEDC004E8EC5 /* JSACLayerFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACLayerFinder.m; sourceTree = "<group>"; };
+		398768271A96FEDC004E8EC5 /* JSACCollectionSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACCollectionSerializer.h; sourceTree = "<group>"; };
+		398768281A96FEDC004E8EC5 /* JSACCollectionSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACCollectionSerializer.m; sourceTree = "<group>"; };
+		398768291A96FEDC004E8EC5 /* JSACMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACMacros.h; sourceTree = "<group>"; };
+		3987682A1A96FEDC004E8EC5 /* JSACollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACollection.h; sourceTree = "<group>"; };
+		3987682C1A96FEDC004E8EC5 /* JSACObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACObjectMapper.h; sourceTree = "<group>"; };
+		3987682D1A96FEDC004E8EC5 /* JSACObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACObjectMapper.m; sourceTree = "<group>"; };
+		3987682F1A96FEDC004E8EC5 /* JSACSerializableClassFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACSerializableClassFactory.h; sourceTree = "<group>"; };
 		39A7E06E1A71A07000031D88 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		5234696118EA0EBA0072B094 /* JSATestModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSATestModelObject.h; sourceTree = "<group>"; };
 		5234696218EA0EBA0072B094 /* JSATestModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSATestModelObject.m; sourceTree = "<group>"; };
@@ -68,26 +88,6 @@
 		52702C6618E831870017F36D /* JSACollectionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JSACollectionTests-Info.plist"; sourceTree = "<group>"; };
 		52702C6818E831870017F36D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52702C6A18E831870017F36D /* JSACollectionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSACollectionTests.m; sourceTree = "<group>"; };
-		52702C7618E831D60017F36D /* NSArray+ContainsString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ContainsString.h"; sourceTree = "<group>"; };
-		52702C7718E831D60017F36D /* NSArray+ContainsString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ContainsString.m"; sourceTree = "<group>"; };
-		52702C7818E831D60017F36D /* NSObject+ListOfProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ListOfProperties.h"; sourceTree = "<group>"; };
-		52702C7918E831D60017F36D /* NSObject+ListOfProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ListOfProperties.m"; sourceTree = "<group>"; };
-		52702C7B18E831D60017F36D /* JSACArrayCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACArrayCollection.h; sourceTree = "<group>"; };
-		52702C7C18E831D60017F36D /* JSACArrayCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACArrayCollection.m; sourceTree = "<group>"; };
-		52702C7D18E831D60017F36D /* JSACCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACCollection.h; sourceTree = "<group>"; };
-		52702C7E18E831D60017F36D /* JSACCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACCollection.m; sourceTree = "<group>"; };
-		52702C7F18E831D60017F36D /* JSACDictionaryCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACDictionaryCollection.h; sourceTree = "<group>"; };
-		52702C8018E831D60017F36D /* JSACDictionaryCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACDictionaryCollection.m; sourceTree = "<group>"; };
-		52702C8218E831D60017F36D /* JSACCollectionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACCollectionFactory.h; sourceTree = "<group>"; };
-		52702C8318E831D60017F36D /* JSACCollectionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACCollectionFactory.m; sourceTree = "<group>"; };
-		52702C8418E831D70017F36D /* JSACCollectionSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACCollectionSerializer.h; sourceTree = "<group>"; };
-		52702C8518E831D70017F36D /* JSACCollectionSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACCollectionSerializer.m; sourceTree = "<group>"; };
-		52702C8618E831D70017F36D /* JSACKeyGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACKeyGenerator.h; sourceTree = "<group>"; };
-		52702C8718E831D70017F36D /* JSACKeyGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACKeyGenerator.m; sourceTree = "<group>"; };
-		52702C8818E831D70017F36D /* JSACLayerFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACLayerFinder.h; sourceTree = "<group>"; };
-		52702C8918E831D70017F36D /* JSACLayerFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSACLayerFinder.m; sourceTree = "<group>"; };
-		52702C8A18E831D70017F36D /* JSACMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACMacros.h; sourceTree = "<group>"; };
-		52702C8C18E831D70017F36D /* JSACSerializableClassFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSACSerializableClassFactory.h; sourceTree = "<group>"; };
 		52702C9618E832330017F36D /* JSAViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSAViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +115,92 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		398768111A96FEDC004E8EC5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				398768121A96FEDC004E8EC5 /* Private */,
+				398768261A96FEDC004E8EC5 /* Public */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		398768121A96FEDC004E8EC5 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				398768131A96FEDC004E8EC5 /* Category */,
+				398768181A96FEDC004E8EC5 /* Data Collection */,
+				3987681F1A96FEDC004E8EC5 /* Factory */,
+				398768221A96FEDC004E8EC5 /* JSACKeyGenerator.h */,
+				398768231A96FEDC004E8EC5 /* JSACKeyGenerator.m */,
+				398768241A96FEDC004E8EC5 /* JSACLayerFinder.h */,
+				398768251A96FEDC004E8EC5 /* JSACLayerFinder.m */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		398768131A96FEDC004E8EC5 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				398768141A96FEDC004E8EC5 /* NSArray+ContainsString.h */,
+				398768151A96FEDC004E8EC5 /* NSArray+ContainsString.m */,
+				398768161A96FEDC004E8EC5 /* NSObject+ListOfProperties.h */,
+				398768171A96FEDC004E8EC5 /* NSObject+ListOfProperties.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		398768181A96FEDC004E8EC5 /* Data Collection */ = {
+			isa = PBXGroup;
+			children = (
+				398768191A96FEDC004E8EC5 /* JSACArrayCollection.h */,
+				3987681A1A96FEDC004E8EC5 /* JSACArrayCollection.m */,
+				3987681B1A96FEDC004E8EC5 /* JSACCollection.h */,
+				3987681C1A96FEDC004E8EC5 /* JSACCollection.m */,
+				3987681D1A96FEDC004E8EC5 /* JSACDictionaryCollection.h */,
+				3987681E1A96FEDC004E8EC5 /* JSACDictionaryCollection.m */,
+			);
+			path = "Data Collection";
+			sourceTree = "<group>";
+		};
+		3987681F1A96FEDC004E8EC5 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				398768201A96FEDC004E8EC5 /* JSACCollectionFactory.h */,
+				398768211A96FEDC004E8EC5 /* JSACCollectionFactory.m */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		398768261A96FEDC004E8EC5 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				398768271A96FEDC004E8EC5 /* JSACCollectionSerializer.h */,
+				398768281A96FEDC004E8EC5 /* JSACCollectionSerializer.m */,
+				398768291A96FEDC004E8EC5 /* JSACMacros.h */,
+				3987682A1A96FEDC004E8EC5 /* JSACollection.h */,
+				3987682B1A96FEDC004E8EC5 /* Objects */,
+				3987682E1A96FEDC004E8EC5 /* Protocol */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		3987682B1A96FEDC004E8EC5 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				3987682C1A96FEDC004E8EC5 /* JSACObjectMapper.h */,
+				3987682D1A96FEDC004E8EC5 /* JSACObjectMapper.m */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		3987682E1A96FEDC004E8EC5 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				3987682F1A96FEDC004E8EC5 /* JSACSerializableClassFactory.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		52702C3318E831860017F36D = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +242,7 @@
 				52702C5518E831860017F36D /* JSAViewController.m */,
 				52702C9618E832330017F36D /* JSAViewController.xib */,
 				39A7E06E1A71A07000031D88 /* test.json */,
-				52702C7418E831D60017F36D /* Classes */,
+				398768111A96FEDC004E8EC5 /* Classes */,
 				52702C4618E831860017F36D /* Supporting Files */,
 			);
 			path = JSACollection;
@@ -189,68 +275,6 @@
 				52702C6718E831870017F36D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		52702C7418E831D60017F36D /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				52702C7518E831D60017F36D /* Category */,
-				52702C7A18E831D60017F36D /* Data Collection */,
-				52702C8118E831D60017F36D /* Factory */,
-				52702C8418E831D70017F36D /* JSACCollectionSerializer.h */,
-				52702C8518E831D70017F36D /* JSACCollectionSerializer.m */,
-				52702C8618E831D70017F36D /* JSACKeyGenerator.h */,
-				52702C8718E831D70017F36D /* JSACKeyGenerator.m */,
-				52702C8818E831D70017F36D /* JSACLayerFinder.h */,
-				52702C8918E831D70017F36D /* JSACLayerFinder.m */,
-				52702C8A18E831D70017F36D /* JSACMacros.h */,
-				3987680B1A96CE29004E8EC5 /* JSACollection.h */,
-				3987680C1A96D2BF004E8EC5 /* JSACObjectMapper.h */,
-				3987680D1A96D2BF004E8EC5 /* JSACObjectMapper.m */,
-				52702C8B18E831D70017F36D /* Protocol */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		52702C7518E831D60017F36D /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				52702C7618E831D60017F36D /* NSArray+ContainsString.h */,
-				52702C7718E831D60017F36D /* NSArray+ContainsString.m */,
-				52702C7818E831D60017F36D /* NSObject+ListOfProperties.h */,
-				52702C7918E831D60017F36D /* NSObject+ListOfProperties.m */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		52702C7A18E831D60017F36D /* Data Collection */ = {
-			isa = PBXGroup;
-			children = (
-				52702C7B18E831D60017F36D /* JSACArrayCollection.h */,
-				52702C7C18E831D60017F36D /* JSACArrayCollection.m */,
-				52702C7D18E831D60017F36D /* JSACCollection.h */,
-				52702C7E18E831D60017F36D /* JSACCollection.m */,
-				52702C7F18E831D60017F36D /* JSACDictionaryCollection.h */,
-				52702C8018E831D60017F36D /* JSACDictionaryCollection.m */,
-			);
-			path = "Data Collection";
-			sourceTree = "<group>";
-		};
-		52702C8118E831D60017F36D /* Factory */ = {
-			isa = PBXGroup;
-			children = (
-				52702C8218E831D60017F36D /* JSACCollectionFactory.h */,
-				52702C8318E831D60017F36D /* JSACCollectionFactory.m */,
-			);
-			path = Factory;
-			sourceTree = "<group>";
-		};
-		52702C8B18E831D70017F36D /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				52702C8C18E831D70017F36D /* JSACSerializableClassFactory.h */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,20 +375,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52702C9118E831D70017F36D /* JSACDictionaryCollection.m in Sources */,
-				52702C8D18E831D70017F36D /* NSArray+ContainsString.m in Sources */,
+				398768331A96FEDC004E8EC5 /* JSACCollection.m in Sources */,
+				398768321A96FEDC004E8EC5 /* JSACArrayCollection.m in Sources */,
 				52702C4C18E831860017F36D /* main.m in Sources */,
-				52702C9018E831D70017F36D /* JSACCollection.m in Sources */,
-				52702C8E18E831D70017F36D /* NSObject+ListOfProperties.m in Sources */,
+				398768381A96FEDC004E8EC5 /* JSACCollectionSerializer.m in Sources */,
+				398768301A96FEDC004E8EC5 /* NSArray+ContainsString.m in Sources */,
+				398768341A96FEDC004E8EC5 /* JSACDictionaryCollection.m in Sources */,
+				398768391A96FEDC004E8EC5 /* JSACObjectMapper.m in Sources */,
+				398768351A96FEDC004E8EC5 /* JSACCollectionFactory.m in Sources */,
 				5234696318EA0EBA0072B094 /* JSATestModelObject.m in Sources */,
-				3987680E1A96D2BF004E8EC5 /* JSACObjectMapper.m in Sources */,
-				52702C9218E831D70017F36D /* JSACCollectionFactory.m in Sources */,
-				52702C9318E831D70017F36D /* JSACCollectionSerializer.m in Sources */,
-				52702C9418E831D70017F36D /* JSACKeyGenerator.m in Sources */,
+				398768361A96FEDC004E8EC5 /* JSACKeyGenerator.m in Sources */,
 				52702C5018E831860017F36D /* JSAAppDelegate.m in Sources */,
-				52702C8F18E831D70017F36D /* JSACArrayCollection.m in Sources */,
-				52702C9518E831D70017F36D /* JSACLayerFinder.m in Sources */,
 				52702C5618E831860017F36D /* JSAViewController.m in Sources */,
+				398768371A96FEDC004E8EC5 /* JSACLayerFinder.m in Sources */,
+				398768311A96FEDC004E8EC5 /* NSObject+ListOfProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

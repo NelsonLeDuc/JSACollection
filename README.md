@@ -14,7 +14,7 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 Add this to your Podfile:
 
-	pod 'JSACollection', '~> 1.0'
+	pod 'JSACollection', '~> 1.1'
 
 Then run:
 	
@@ -43,6 +43,14 @@ NSArray *arrayOfObjects = [[JSACCollectionSerializer sharedInstance] generateMod
 To create a factory, the object should conform to the `JSACSerializableClassFactory` protocol and implement the two methods; `-(NSArray *)listOfKeys` and `-(id)objectForDictionary:(NSDictionary *)dictionary`.
 
 ## Advanced
+
+### Property Naming
+
+The way that property names map to fields contained within the collection is as follows (all of these are case insensitive):
+
+- Names will map directly to fields with the same name.
+- The first word of a name will map to a field with that name. (e.g. nameString will map to name)
+- The words of a name seperated by underscores will map to a corresponding field. (e.g. firstName will map to first_name)
 
 ### Non-Standard Types
 

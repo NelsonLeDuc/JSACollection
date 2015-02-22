@@ -1,0 +1,20 @@
+{
+    "error" : "none",
+    "stuff" : [
+               {
+               "name" : "Bob Jones",
+               "testURL" : "http://www.google.com",
+               "randomArray" : [ 1, 2, 3 ],
+               "homes" : [ { "home_name" : "main" }, { "home_name" : "secondary" } ],
+               "bestHome" : { "home_name" : "Walmart" }
+               },
+               {
+               "name" : "Bob Jones",
+               "testURL" : "http://www.google.com",
+               "randomArray" : [ 1, 2, 3 ],
+               "homes" : [ { "home_name" : "main" }, { "home_name" : "secondary" } ],
+               "bestHome" : { "home_name" : "Lowes" }
+               }
+               ]
+}
+                                    

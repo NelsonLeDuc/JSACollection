@@ -16,7 +16,9 @@
     Setting this allows the model object to be created using 
     types that aren't standard. This will attempt to map the 
     values for the matching key to the object of the non-standard 
-    type. This may cause errors when deserialzing.
+    type. This may cause errors when deserialzing. This field
+    is ignored if you are using a class factory, or the 
+    provided mapper.
  
     By default this is set to NO. 
  **/

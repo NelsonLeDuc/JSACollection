@@ -8,6 +8,7 @@
 
 #import "JSACCollectionSerializer.h"
 #import "JSACSerializableClassFactory.h"
+#import "JSACCollectionFactory.h"
 #import "JSACLayerFinder.h"
 #import "JSACObjectMapper.h"
 
@@ -59,6 +60,8 @@
     keyList = [serializableClassFactory listOfKeys];
     
     id modelContainer = [JSACLayerFinder modelContainerWithProperties:keyList fromContainer:container];
+    modelContainer = [JSACCollectionFactory generateUsableCollectionFromCollection:modelContainer];
+    
     id modelObject;
     
     NSMutableArray *modelObjectArray = [[NSMutableArray alloc] init];

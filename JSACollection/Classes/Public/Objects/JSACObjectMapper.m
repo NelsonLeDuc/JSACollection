@@ -22,9 +22,11 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
 @interface JSACObjectMapper ()
 
+@property (nonatomic, assign) BOOL usingCustomDictionary;
 @property (nonatomic, strong) NSDictionary *keyDictionary;
 @property (nonatomic, strong) Class objectClass;
 @property (nonatomic, strong) NSMutableDictionary *virtualDictionary;
+@property (nonatomic, strong) NSMutableDictionary *subMapperDictionary;
 
 @end
 
@@ -41,6 +43,8 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     if (self)
     {
         _objectClass = clazz;
+        _allowNonStandardTypes = NO;
+        _usingCustomDictionary = NO;
     }
     
     return self;
@@ -87,7 +91,9 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
         return;
     
     _allowNonStandardTypes = allowNonStandardTypes;
-    self.keyDictionary = nil;
+    
+    if (!self.usingCustomDictionary)
+        self.keyDictionary = nil;
 }
 
 - (NSMutableDictionary *)virtualDictionary
@@ -98,12 +104,34 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     return _virtualDictionary;
 }
 
+- (NSMutableDictionary *)subMapperDictionary
+{
+    if (!_subMapperDictionary)
+        _subMapperDictionary = [NSMutableDictionary dictionary];
+    
+    return _subMapperDictionary;
+}
+
 - (void)addSetterForPropertyWithName:(NSString *)name withBlock:(JSACObjectMapperPropertySetterBlock)block
 {
     if (!block || !name)
         return;
     
     [self.virtualDictionary setObject:block forKey:name];
+}
+
+- (void)addSubObjectMapper:(JSACObjectMapper *)mapper forPropertyName:(NSString *)name
+{
+    if (!mapper || !name)
+        return;
+    
+    [self.subMapperDictionary setObject:mapper forKey:name];
+}
+
+- (void)setCustomKeyDictionary:(NSDictionary *)keyDictionary
+{
+    self.keyDictionary = keyDictionary;
+    self.usingCustomDictionary = !keyDictionary ? NO : YES;
 }
 
 #pragma mark - JSACSerializableClassFactory
@@ -172,7 +200,11 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
         return NO;
     
     Class clazz = [object classForPropertyKey:modelArrayString];
-    NSArray *array = [serializer generateModelObjectsWithSerializableClass:clazz fromContainer:value];
+    JSACObjectMapper *subMapper = self.subMapperDictionary[key];
+    if (!subMapper)
+        subMapper = [JSACObjectMapper objectMapperForClass:clazz];
+    
+    NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
     [object setStandardValue:array forKey:key];
     
     return YES;
@@ -182,7 +214,11 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 - (BOOL)setNonStandardValue:(id)value onObject:(id)object forKey:(NSString *)key withSerializer:(JSACCollectionSerializer *)serializer
 {
     Class clazz = [object classForPropertyKey:key];
-    NSArray *array = [serializer generateModelObjectsWithSerializableClass:clazz fromContainer:value];
+    JSACObjectMapper *subMapper = self.subMapperDictionary[key];
+    if (!subMapper)
+        subMapper = [JSACObjectMapper objectMapperForClass:clazz];
+    
+    NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
     if (array)
         if (key)
             if ([array firstObject])

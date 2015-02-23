@@ -18,5 +18,6 @@
 @property (nonatomic, strong) NSArray *randomArray;
 @property (nonatomic, strong) NSArray *homes; __MODEL_ARRAY(JSASubTestModelObject, homes);
 @property (nonatomic, strong) JSASubTestModelObject *bestHome;
+@property (nonatomic, strong) NSString *unused;
 
 @end

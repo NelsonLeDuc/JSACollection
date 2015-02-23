@@ -32,6 +32,32 @@ NSArray *arrayOfObjects = [[JSACCollectionSerializer sharedInstance] generateMod
 
 Using this method, by default, the serializer will generate a mapping of the objects properties to values within the JSON. However, if the class defines the method `+(NSDictionary *)JSONKeyMapping` the serializer will use the mapping returned from this method, this mapping should be setup with the keys being the thing that exists in the collection and the values are the names of the properties to map to (note this should never be nil).
 
+### Serialization Using The Mapper
+
+JSACollection provides a mapper class JSACObjectMapper to provide users of the API to adjust how the mapping occurs. There are a couple of provided methods to facilitate this.
+
+```obj-c
+[mapper setSetterBlock:^id (NSDictionary *dict, id obj) {
+    //Perform custom object mapping
+}];
+```
+
+This replaces the mapping mechanism of the mapper, when a dictionary that represents the object is found it will call this block with the dictionary and a newly instantiated object. The value returned will be used instead of the obj passed in if you would like to call a different initializer or other logic.
+
+```obj-c
+[mapper addSetterForPropertyWithName:@"custom" withBlock:^(id value, id object) {
+    //Perform custom property mapping
+}];
+```
+
+This enables you to do something when mapping a field to a property, if the provided name is already a property on the object it will not set it and just call this block. However, if the name is not a property on the object it will still map and call the block with the value as if it were a property.
+
+```obj-c 
+[mapper addSubObjectMapper:subMapper forPropertyName:@"bestHome"];
+```
+
+Whenever an array of objects is parsed, or a non-standard property needs to be mapped the mapper will get called again, if you would like to augment this behavior a sub-mapper can be provided through this method. 
+
 ### Serialization Using A Factory
 
 Alternatively, instead of leaving the creation up to the serializer, one can provide a factory that provides a list of keys and will create an object when given a dictionary. This will end up looking like:

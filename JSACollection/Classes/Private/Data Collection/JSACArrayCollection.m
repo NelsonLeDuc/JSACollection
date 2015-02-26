@@ -11,7 +11,7 @@
 
 @interface JSACArrayCollection ()
 
-@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong, readwrite) NSArray *array;
 
 @end
 
@@ -39,6 +39,14 @@
 - (NSInteger)count
 {
     return [self.array count];
+}
+
+- (BOOL)isEqualToCollection:(JSACCollection *)collection
+{
+    if (![collection isKindOfClass:[self class]])
+        return NO;
+    
+    return [self.array isEqualToArray:[(JSACArrayCollection *)collection array]];
 }
 
 #pragma mark - NSFastEnumeration

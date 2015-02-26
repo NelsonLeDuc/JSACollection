@@ -30,4 +30,17 @@
     return 0;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[self class]])
+        return NO;
+    
+    return [self isEqualToCollection:object];
+}
+
+- (BOOL)isEqualToCollection:(JSACCollection *)collection
+{
+    return NO;
+}
+
 @end

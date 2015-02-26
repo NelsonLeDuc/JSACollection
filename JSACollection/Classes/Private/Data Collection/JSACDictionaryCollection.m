@@ -11,7 +11,7 @@
 
 @interface JSACDictionaryCollection ()
 
-@property (nonatomic, strong) NSDictionary *dictionary;
+@property (nonatomic, strong, readwrite) NSDictionary *dictionary;
 
 @end
 
@@ -45,6 +45,14 @@
 - (NSInteger)count
 {
     return [[self.dictionary allKeys] count];
+}
+
+- (BOOL)isEqualToCollection:(JSACCollection *)collection
+{
+    if (![collection isKindOfClass:[self class]])
+        return NO;
+    
+    return [self.dictionary isEqualToDictionary:[(JSACDictionaryCollection *)collection dictionary]];
 }
 
 #pragma mark - NSFastEnumeration

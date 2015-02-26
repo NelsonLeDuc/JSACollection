@@ -36,10 +36,17 @@
 
 + (JSACCollection *)generateUsableCollectionFromCollection:(JSACCollection *)collection
 {
-    if ([collection isKindOfClass:[JSACArrayCollection class]])
-        return collection;
+    JSACCollection *coll = collection;
+    if ([collection isKindOfClass:[JSACDictionaryCollection class]])
+    {
+        NSArray *arr = [[((JSACDictionaryCollection *)collection).dictionary allValues] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject isKindOfClass:[NSDictionary class]];
+        }]];
+        
+        coll = [self collectionWithObject:arr];
+    }
     
-    return [self collectionWithObject:@[ collection ]];
+    return coll;
 }
 
 @end

@@ -32,10 +32,12 @@
         }
         else
         {
-            if (![layer isKindOfClass:[JSACDictionaryCollection class]])
-                return layer;
+            if ([layer isEqualToCollection:collection])
+            {
+                return [JSACCollectionFactory collectionWithObject:@[ layer ]];
+            }
             
-            return collection;
+            return layer;
         }
     }
     if (obj)

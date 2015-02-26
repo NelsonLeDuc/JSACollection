@@ -11,6 +11,8 @@
 
 @interface JSACDictionaryCollection : JSACCollection
 
+@property (nonatomic, strong, readonly) NSDictionary *dictionary;
+
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 
 @end

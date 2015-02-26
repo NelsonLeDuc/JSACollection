@@ -11,6 +11,8 @@
 
 @interface JSACArrayCollection : JSACCollection
 
+@property (nonatomic, strong, readonly) NSArray *array;
+
 - (instancetype)initWithArray:(NSArray*)array;
 
 @end

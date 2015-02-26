@@ -12,5 +12,6 @@
 
 - (JSACCollection*)subCollectionFromKey:(id)key;
 - (NSInteger)count;
+- (BOOL)isEqualToCollection:(JSACCollection *)collection;
 
 @end

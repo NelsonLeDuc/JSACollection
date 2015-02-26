@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) JSACCollectionSerializer *serializer;
 @property (nonatomic, strong) id testCollection;
+@property (nonatomic, strong) id topLevelCollection;
 
 @end
 
@@ -27,6 +28,10 @@
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSData *jsonData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"test1" ofType:@"json"]];
     self.testCollection = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    
+    jsonData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"test2" ofType:@"json"]];
+    self.topLevelCollection = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    
     self.serializer = [[JSACCollectionSerializer alloc] init];
 }
 
@@ -80,6 +85,28 @@
     
     XCTAssertNotNil([model bestHome]);
     XCTAssertEqualObjects([[model bestHome] homeName], @"Walmart");
+}
+
+- (void)testGenerateWithTopLevelObjects
+{
+    self.serializer.allowNonStandardTypes = NO;
+    NSArray *models = [self.serializer generateModelObjectsWithSerializableClass:[JSATestModelObject class] fromContainer:self.topLevelCollection];
+    
+    XCTAssertEqual([models count], 2);
+    
+    JSATestModelObject *model = [models firstObject];
+    XCTAssertEqualObjects([model nameString], @"Bob Jones");
+    XCTAssertEqualObjects([[model testURL] absoluteString], @"http://www.google.com");
+    
+    NSArray *modelNumArray = [model randomArray];
+    XCTAssertEqual([modelNumArray count], 3);
+    XCTAssertEqual([modelNumArray[1] integerValue], 2);
+    
+    NSArray *homesArray = [model homes];
+    XCTAssertEqual([homesArray count], 2);
+    XCTAssertEqualObjects([homesArray[0] homeName], @"main");
+    
+    XCTAssertNil([model bestHome]);
 }
 
 #pragma mark - Object Mapper

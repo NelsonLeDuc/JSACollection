@@ -66,7 +66,7 @@
 
 - (BOOL)setStandardValue:(id)value forKey:(NSString *)key
 {
-    if (value == nil || key == nil)
+    if (value == nil || key == nil || value == [NSNull null])
         return NO;
     
     if ([self isPropertyOfStandardType:key])

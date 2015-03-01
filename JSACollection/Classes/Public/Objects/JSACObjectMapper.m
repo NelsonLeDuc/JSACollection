@@ -213,6 +213,9 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
 - (BOOL)setNonStandardValue:(id)value onObject:(id)object forKey:(NSString *)key withSerializer:(JSACCollectionSerializer *)serializer
 {
+    if (object == nil || key == nil || object == [NSNull null])
+        return NO;
+    
     Class clazz = [object classForPropertyKey:key];
     JSACObjectMapper *subMapper = self.subMapperDictionary[key];
     if (!subMapper)

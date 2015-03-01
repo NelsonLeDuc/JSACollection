@@ -60,16 +60,22 @@ static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
             [keyDict setValue:propertyName forKey:firstWord];
             
             NSMutableString *underscoredWords = [NSMutableString stringWithString:prop];
+            NSMutableString *dashedWords = [NSMutableString stringWithString:prop];
+            BOOL prevUppercase = NO;
             while (indexOfUppercase < [underscoredWords length])
             {
-                if ([[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[underscoredWords characterAtIndex:indexOfUppercase]])
+                BOOL uppercase = [[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[underscoredWords characterAtIndex:indexOfUppercase]];
+                if (uppercase && !prevUppercase)
                 {
                     [underscoredWords insertString:@"_" atIndex:indexOfUppercase];
+                    [dashedWords insertString:@"-" atIndex:indexOfUppercase];
                     indexOfUppercase++;
                 }
                 indexOfUppercase++;
+                prevUppercase = uppercase;
             }
             [keyDict setValue:propertyName forKey:underscoredWords];
+            [keyDict setValue:propertyName forKey:dashedWords];
         }
     }
     return [NSDictionary dictionaryWithDictionary:keyDict];

@@ -34,7 +34,7 @@
         {
             if ([layer isEqualToCollection:collection])
             {
-                return [JSACCollectionFactory collectionWithObject:@[ layer ]];
+                return [JSACCollectionFactory collectionWithObject:@[ [layer dictionary] ]];
             }
             
             return layer;

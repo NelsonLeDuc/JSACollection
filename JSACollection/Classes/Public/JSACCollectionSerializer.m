@@ -69,7 +69,11 @@
     for (id model in modelContainer)
     {
         modelObject = [serializableClassFactory objectForDictionary:model forCollectionSerializer:self];
-        [modelObjectArray addObject:modelObject];
+        
+        if (modelObject)
+        {
+            [modelObjectArray addObject:modelObject];
+        }
     }
     
     return modelObjectArray;

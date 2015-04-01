@@ -1,5 +1,9 @@
 # JSACollection
 
+[![Version](https://img.shields.io/cocoapods/v/JSACollection.svg?style=flat)](http://cocoadocs.org/docsets/JSACollection)
+[![License](https://img.shields.io/cocoapods/l/JSACollection.svg?style=flat)](http://cocoadocs.org/docsets/JSACollection)
+[![Platform](https://img.shields.io/cocoapods/p/JSACollection.svg?style=flat)](http://cocoadocs.org/docsets/JSACollection)
+
 JSACollection is framework for converting collections (i.e. dictionaries, and arrays) into objective-c objects. This is useful in converting plists and JSON data into useable objective-c objects.
 
 ## First Steps

@@ -10,6 +10,8 @@
 
 @interface JSACCollection : NSObject <NSFastEnumeration>
 
+@property (nonatomic, weak) JSACCollection *parentCollection;
+
 - (JSACCollection*)subCollectionFromKey:(id)key;
 - (NSInteger)count;
 - (BOOL)isEqualToCollection:(JSACCollection *)collection;

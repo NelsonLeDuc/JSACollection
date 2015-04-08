@@ -33,7 +33,10 @@
 
 - (JSACCollection*)subCollectionFromKey:(id)key
 {
-    return [JSACCollectionFactory collectionWithObject:key];
+    JSACCollection *subCollection = [JSACCollectionFactory collectionWithObject:key];
+    subCollection.parentCollection = self;
+    
+    return subCollection;
 }
 
 - (NSInteger)count

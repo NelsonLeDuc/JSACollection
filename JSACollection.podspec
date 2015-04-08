@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "JSACollection"
-  s.version      = "1.2.2"
+  s.version      = "1.3.0"
   s.summary      = "A framework that can parse objects from array, dictionary, & object structures."
   s.homepage     = "https://github.com/NelsonLeDuc/JSACollection"
   s.license      = 'MIT'

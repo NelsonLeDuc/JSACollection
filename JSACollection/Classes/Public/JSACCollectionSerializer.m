@@ -50,6 +50,7 @@
 {
     JSACObjectMapper *objectMapper = [JSACObjectMapper objectMapperForClass:class];
     objectMapper.allowNonStandardTypes = self.allowNonStandardTypes;
+    objectMapper.dateFormatter = self.dateFormatter;
     
     return [self generateModelObjectsWithSerializableClassFactory:objectMapper fromContainer:container];
 }

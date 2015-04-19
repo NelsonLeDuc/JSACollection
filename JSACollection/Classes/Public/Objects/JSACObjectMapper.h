@@ -35,6 +35,8 @@ typedef void(^JSACObjectMapperPropertySetterBlock)(id value, id object);
  **/
 @property (nonatomic, copy) JSACObjectMapperObjectSetterBlock setterBlock;
 
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
 - (instancetype)initWithClass:(Class)clazz NS_DESIGNATED_INITIALIZER;
 
 /** If a block is added for a property the mapper will call this block

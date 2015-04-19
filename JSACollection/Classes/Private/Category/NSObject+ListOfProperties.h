@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const JSACUserInfoDateFormatterKey;
+
 @interface NSObject (ListOfProperties)
 
 - (NSArray *)listOfProperties;
@@ -15,5 +17,6 @@
 - (NSArray *)listOfNonStandardProperties;
 - (Class)classForPropertyKey:(NSString *)key;
 - (BOOL)setStandardValue:(id)value forKey:(NSString *)key;
+- (BOOL)setStandardValue:(id)value forKey:(NSString *)key userInfo:(NSDictionary *)userInfo;
 
 @end

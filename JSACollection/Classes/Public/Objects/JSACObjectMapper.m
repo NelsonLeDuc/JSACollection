@@ -143,6 +143,12 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 
 - (id)objectForDictionary:(NSDictionary *)dictionary forCollectionSerializer:(JSACCollectionSerializer *)serializer
 {
+    NSDictionary *userInfo;
+    if (self.dateFormatter)
+    {
+        userInfo = @{ JSACUserInfoDateFormatterKey : self.dateFormatter };
+    }
+    
     NSDictionary *normalizedDict = dictionary;
     if ([normalizedDict isKindOfClass:[NSDictionary class]])
     {
@@ -174,7 +180,7 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
                 }
                 else if (![self setupModelArrayIfNecessaryWithValue:value forKey:objectKey onObject:modelObject withSerializer:serializer])
                 {
-                    BOOL standard = [modelObject setStandardValue:value forKey:objectKey];
+                    BOOL standard = [modelObject setStandardValue:value forKey:objectKey userInfo:userInfo];
                     if (!standard && self.allowNonStandardTypes)
                         [self setNonStandardValue:value onObject:modelObject forKey:[self.keyDictionary valueForKey:key] withSerializer:serializer];
                 }

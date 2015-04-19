@@ -9,6 +9,8 @@
 #import "NSObject+ListOfProperties.h"
 #import <objc/runtime.h>
 
+NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
+
 @implementation NSObject (ListOfProperties)
 
 #pragma mark - Public Methods
@@ -66,6 +68,11 @@
 
 - (BOOL)setStandardValue:(id)value forKey:(NSString *)key
 {
+    return [self setStandardValue:value forKey:key userInfo:nil];
+}
+
+- (BOOL)setStandardValue:(id)value forKey:(NSString *)key userInfo:(NSDictionary *)userInfo
+{
     if (value == nil || key == nil || value == [NSNull null])
         return NO;
     
@@ -73,9 +80,27 @@
     {
         NSString *type = [self typeOfProperty:key];
         if ([type isEqualToString:@"NSURL"])
+        {
             [self setValue:[NSURL URLWithString:value] forKey:key];
+        }
+        else if ([type isEqualToString:@"NSDate"])
+        {
+            NSDate *date;
+            if ([value isKindOfClass:[NSDate class]])
+            {
+                date = value;
+            }
+            else if ([value isKindOfClass:[NSString class]])
+            {
+                NSDateFormatter *formatter = userInfo[JSACUserInfoDateFormatterKey];
+                date = [formatter dateFromString:value];
+            }
+            [self setValue:date forKey:key];
+        }
         else
+        {
             [self setValue:value forKey:key];
+        }
         return YES;
     }
     
@@ -115,10 +140,9 @@
 - (BOOL)isPropertyOfStandardType:(NSString *)propertyName
 {
     NSString *type = [self typeOfProperty:propertyName];
-    
-    if ([type isEqualToString:@"NSString"] || [type isEqualToString:@"NSURL"] || [type isEqualToString:@"__NSCFDictionary"] || [type isEqualToString:@"NSDictionary"] || [type isEqualToString:@"primitive"] | [type isEqualToString:@"NSArray"])
-        return YES;
-    return NO;
+    NSArray *allowedTypes = @[ @"NSString", @"NSURL", @"__NSCFDictionary", @"NSDictionary", @"primitive", @"NSArray", @"NSNumber", @"NSDate" ];
+
+    return [allowedTypes containsObject:type];
 }
 
 

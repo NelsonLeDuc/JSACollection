@@ -24,6 +24,8 @@
  **/
 @property (nonatomic, assign) BOOL allowNonStandardTypes;
 
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
 /** Convenience method to generate a shared instance.
  
     @return     The instance shared by the application.

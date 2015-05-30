@@ -339,6 +339,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Nelson LeDuc";
 				TargetAttributes = {
+					52702C3B18E831860017F36D = {
+						DevelopmentTeam = 8967Q3PRM8;
+					};
 					52702C5C18E831860017F36D = {
 						TestTargetID = 52702C3B18E831860017F36D;
 					};
@@ -523,10 +526,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSACollection/JSACollection-Prefix.pch";
 				INFOPLIST_FILE = "JSACollection/JSACollection-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -536,10 +542,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSACollection/JSACollection-Prefix.pch";
 				INFOPLIST_FILE = "JSACollection/JSACollection-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

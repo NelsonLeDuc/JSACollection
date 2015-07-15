@@ -10,6 +10,7 @@
 #import "JSACollection.h"
 #import "JSATestModelObject.h"
 #import "JSASubTestModelObject.h"
+#import "JSATertiaryTestModelObject.h"
 
 @interface JSACollectionTests : XCTestCase
 
@@ -294,6 +295,8 @@
     
     XCTAssertNotNil([model bestHome]);
     XCTAssertEqualObjects([[model bestHome] homeName], @"Walmart");
+    
+    XCTAssertEqualObjects([[[model bestHome] moreData] lastName], @"Smith");
 }
 
 - (void)testGenerateFromClassWithMapperIgnoreSerializer

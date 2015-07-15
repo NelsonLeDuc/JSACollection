@@ -20,7 +20,8 @@ typedef void(^JSACObjectMapperPropertySetterBlock)(id value, id object);
  Setting this allows the model object to be created using
  types that aren't standard. This will attempt to map the
  values for the matching key to the object of the non-standard
- type. This may cause errors when deserialzing.
+ type. This may cause errors when deserialzing. Note: The value
+ will be propogated through unless a custom submapper is given.
  
  By default this is set to NO.
  **/

@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class JSATertiaryTestModelObject;
+
 @interface JSASubTestModelObject : NSObject
 
 @property (nonatomic, strong) NSString *homeName;
+@property (nonatomic, strong) JSATertiaryTestModelObject *moreData;
 
 @end

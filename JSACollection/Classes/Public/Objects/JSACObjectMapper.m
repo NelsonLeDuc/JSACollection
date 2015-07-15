@@ -225,7 +225,10 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     Class clazz = [object classForPropertyKey:key];
     JSACObjectMapper *subMapper = self.subMapperDictionary[key];
     if (!subMapper)
+    {
         subMapper = [JSACObjectMapper objectMapperForClass:clazz];
+        subMapper.allowNonStandardTypes = self.allowNonStandardTypes;
+    }
     
     NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
     if (array)

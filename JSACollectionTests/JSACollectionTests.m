@@ -90,6 +90,8 @@
     
     XCTAssertNotNil([model bestHome]);
     XCTAssertEqualObjects([[model bestHome] homeName], @"Walmart");
+    
+    XCTAssertNotNil([[model bestHome] parentModelObject]);
 }
 
 - (void)testGenerateWithTopLevelObjects

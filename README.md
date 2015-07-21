@@ -18,7 +18,7 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 Add this to your Podfile:
 
-	pod 'JSACollection', '~> 1.3'
+	pod 'JSACollection', '~> 1.4'
 
 Then run:
 	

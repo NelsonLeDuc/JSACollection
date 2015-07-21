@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSACMacros.h"
 
 @class JSATertiaryTestModelObject;
 
@@ -14,5 +15,6 @@
 
 @property (nonatomic, strong) NSString *homeName;
 @property (nonatomic, strong) JSATertiaryTestModelObject *moreData;
+@property (nonatomic, weak) id parentModelObject; __MODEL_PARENT(parentModelObject)
 
 @end

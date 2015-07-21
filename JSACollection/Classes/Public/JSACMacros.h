@@ -7,4 +7,4 @@
 //
 
 #define __MODEL_ARRAY(class, array) @property (nonatomic, strong) class * MODEL_ARRAY_##array;
-
+#define __MODEL_PARENT(prop) @property (nonatomic, strong) id MODEL_PARENT_##prop;

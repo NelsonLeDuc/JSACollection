@@ -12,6 +12,7 @@
 #import "JSACCollectionSerializer.h"
 
 static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
+static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
 
 @interface NSObject (JSACollectionCategory)
 
@@ -27,6 +28,7 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 @property (nonatomic, strong) Class objectClass;
 @property (nonatomic, strong) NSMutableDictionary *virtualDictionary;
 @property (nonatomic, strong) NSMutableDictionary *subMapperDictionary;
+@property (nonatomic, strong) id parentObject;
 
 @end
 
@@ -169,21 +171,30 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
     {
         for (NSString *key in [self listOfKeys])
         {
+            NSString *objectKey = [self.keyDictionary valueForKey:key];
             id value = [normalizedDict valueForKey:[key lowercaseString]];
-            if (value)
+            if (!value)
             {
-                NSString *objectKey = [self.keyDictionary valueForKey:key];
-                if ([self.virtualDictionary objectForKey:objectKey])
+                NSString *modelParentString = [NSString stringWithFormat:kJSACollectionModelParentPrefix, key];
+                if ([[self class] stringArray:[modelObject listOfProperties] containsString:modelParentString]
+                    && self.parentObject)
                 {
-                    JSACObjectMapperPropertySetterBlock propBlock = self.virtualDictionary[objectKey];
-                    propBlock(value, modelObject);
+                    [modelObject setValue:self.parentObject forKey:objectKey];
                 }
-                else if (![self setupModelArrayIfNecessaryWithValue:value forKey:objectKey onObject:modelObject withSerializer:serializer])
-                {
-                    BOOL standard = [modelObject setStandardValue:value forKey:objectKey userInfo:userInfo];
-                    if (!standard && self.allowNonStandardTypes)
-                        [self setNonStandardValue:value onObject:modelObject forKey:[self.keyDictionary valueForKey:key] withSerializer:serializer];
-                }
+                
+                continue;
+            }
+            
+            if ([self.virtualDictionary objectForKey:objectKey])
+            {
+                JSACObjectMapperPropertySetterBlock propBlock = self.virtualDictionary[objectKey];
+                propBlock(value, modelObject);
+            }
+            else if (![self setupModelArrayIfNecessaryWithValue:value forKey:objectKey onObject:modelObject withSerializer:serializer])
+            {
+                BOOL standard = [modelObject setStandardValue:value forKey:objectKey userInfo:userInfo];
+                if (!standard && self.allowNonStandardTypes)
+                    [self setNonStandardValue:value onObject:modelObject forKey:objectKey withSerializer:serializer];
             }
         }
     }
@@ -196,11 +207,7 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 - (BOOL)setupModelArrayIfNecessaryWithValue:(id)value forKey:(NSString *)key onObject:(id)object withSerializer:(JSACCollectionSerializer *)serializer
 {
     NSString *modelArrayString = [NSString stringWithFormat:kJSACollectionModelArrayPrefix, key];
-    BOOL exists = NO;
-    NSArray *keyList = [object listOfProperties];
-    for (NSString *k in keyList)
-        if ([k isEqualToString:modelArrayString])
-            exists = YES;
+    BOOL exists = [[self class] stringArray:[object listOfProperties] containsString:modelArrayString];
     
     if (!exists)
         return NO;
@@ -229,6 +236,7 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
         subMapper = [JSACObjectMapper objectMapperForClass:clazz];
         subMapper.allowNonStandardTypes = self.allowNonStandardTypes;
     }
+    subMapper.parentObject = object;
     
     NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
     if (array)
@@ -239,6 +247,18 @@ static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
                 return YES;
             }
     return NO;
+}
+
+#pragma mark - Convenience
+
++ (BOOL)stringArray:(NSArray *)array containsString:(NSString *)string
+{
+    BOOL exists = NO;
+    for (NSString *k in array)
+        if ([k isEqualToString:string])
+            exists = YES;
+    
+    return exists;
 }
 
 @end

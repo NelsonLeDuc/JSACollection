@@ -116,6 +116,18 @@ If a class has a property that is an array it will map an array from the collect
 ```
 and thats it, your `otherFooArray` will now be full of `OtherFoo` objects.
 
+### Parent Objects
+
+If a class has a non-standard object on it and you would like that object to have a reference to its parent object simply use the provided macro. In your header import `JSACMacros.h` and use the __MODEL_PARENT macro, which will look like below when implemented.
+```obj-c
+@interface Foo : NSObject
+
+@property (nonatomic, strong) id parent; __MODEL_PARENT(parent);
+
+@end
+```
+thats all you need to do, the parent property will now hold a reference to Foo's parent object.
+
 ## Requirements
 
 JSACollection has only been tested for iOS 7.0+ but should be fully compatible with atleast iOS 6.

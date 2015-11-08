@@ -12,10 +12,16 @@ extern NSString * const JSACUserInfoDateFormatterKey;
 
 @interface NSObject (ListOfProperties)
 
++ (NSArray *)listOfProperties;
++ (NSArray *)listOfStandardProperties;
++ (NSArray *)listOfNonStandardProperties;
++ (Class)classForPropertyKey:(NSString *)key;
+
 - (NSArray *)listOfProperties;
 - (NSArray *)listOfStandardProperties;
 - (NSArray *)listOfNonStandardProperties;
 - (Class)classForPropertyKey:(NSString *)key;
+
 - (BOOL)setStandardValue:(id)value forKey:(NSString *)key;
 - (BOOL)setStandardValue:(id)value forKey:(NSString *)key userInfo:(NSDictionary *)userInfo;
 

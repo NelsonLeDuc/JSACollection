@@ -10,6 +10,7 @@
 #import "JSACKeyGenerator.h"
 #import "NSObject+ListOfProperties.h"
 #import "JSACCollectionSerializer.h"
+#import "JSACUtility.h"
 
 static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
@@ -162,6 +163,7 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
     }
     
     id modelObject = [[self.objectClass alloc] init];
+    NSString *parentPropName = parentPropertyName(self.objectClass);
     
     if (self.setterBlock)
     {
@@ -175,11 +177,18 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
             id value = [normalizedDict valueForKey:[key lowercaseString]];
             if (!value)
             {
-                NSString *modelParentString = [NSString stringWithFormat:kJSACollectionModelParentPrefix, key];
-                if ([[self class] stringArray:[modelObject listOfProperties] containsString:modelParentString]
-                    && self.parentObject)
+                if ([key isEqualToString:parentPropName] && self.parentObject)
                 {
                     [modelObject setValue:self.parentObject forKey:objectKey];
+                }
+                else
+                {
+                    NSString *modelParentString = [NSString stringWithFormat:kJSACollectionModelParentPrefix, key];
+                    if ([[self class] stringArray:[modelObject listOfProperties] containsString:modelParentString]
+                        && self.parentObject)
+                    {
+                        [modelObject setValue:self.parentObject forKey:objectKey];
+                    }
                 }
                 
                 continue;
@@ -206,19 +215,41 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
 
 - (BOOL)setupModelArrayIfNecessaryWithValue:(id)value forKey:(NSString *)key onObject:(id)object withSerializer:(JSACCollectionSerializer *)serializer
 {
-    NSString *modelArrayString = [NSString stringWithFormat:kJSACollectionModelArrayPrefix, key];
-    BOOL exists = [[self class] stringArray:[object listOfProperties] containsString:modelArrayString];
-    
-    if (!exists)
-        return NO;
-    
-    Class clazz = [object classForPropertyKey:modelArrayString];
-    JSACObjectMapper *subMapper = self.subMapperDictionary[key];
-    if (!subMapper)
-        subMapper = [JSACObjectMapper objectMapperForClass:clazz];
-    
-    NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
-    [object setStandardValue:array forKey:key];
+    NSDictionary *arrayTypeMap = mappedArrayClassTypes(self.objectClass);
+    if (arrayTypeMap)
+    {
+        NSString *arrayType = arrayTypeMap[key];
+        
+        if (!arrayType)
+            return NO;
+        
+        Class clazz = NSClassFromString(arrayType);
+        if (!clazz)
+            return NO;
+        
+        JSACObjectMapper *subMapper = self.subMapperDictionary[key];
+        if (!subMapper)
+            subMapper = [JSACObjectMapper objectMapperForClass:clazz];
+        
+        NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
+        [object setStandardValue:array forKey:key];
+    }
+    else
+    {
+        NSString *modelArrayString = [NSString stringWithFormat:kJSACollectionModelArrayPrefix, key];
+        BOOL exists = [[self class] stringArray:[object listOfProperties] containsString:modelArrayString];
+        
+        if (!exists)
+            return NO;
+        
+        Class clazz = [object classForPropertyKey:modelArrayString];
+        JSACObjectMapper *subMapper = self.subMapperDictionary[key];
+        if (!subMapper)
+            subMapper = [JSACObjectMapper objectMapperForClass:clazz];
+        
+        NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
+        [object setStandardValue:array forKey:key];
+    }
     
     return YES;
 }

@@ -11,6 +11,7 @@
 #import "JSATestModelObject.h"
 #import "JSASubTestModelObject.h"
 #import "JSATertiaryTestModelObject.h"
+#import "JSAChildTestModel.h"
 
 @interface JSACollectionTests : XCTestCase
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) id testCollection;
 @property (nonatomic, strong) id topLevelCollection;
 @property (nonatomic, strong) id middleCollection;
+@property (nonatomic, strong) id parentTestCollection;
 
 @end
 
@@ -36,6 +38,9 @@
     
     jsonData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"test3" ofType:@"json"]];
     self.middleCollection = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    
+    jsonData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"test4" ofType:@"json"]];
+    self.parentTestCollection = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     
     self.serializer = [[JSACCollectionSerializer alloc] init];
 }
@@ -348,6 +353,14 @@
     
     XCTAssertNotNil([model bestHome]);
     XCTAssertEqualObjects([[model bestHome] homeName], @"Walmart");
+}
+
+- (void)testUseParentProperties
+{
+    NSArray *models = [self.serializer generateModelObjectsWithSerializableClass:[JSAChildTestModel class] fromContainer:self.parentTestCollection];
+    
+    JSAChildTestModel *model = [models firstObject];
+    XCTAssertEqualObjects([model nameString], @"Bob Jones");
 }
 
 @end

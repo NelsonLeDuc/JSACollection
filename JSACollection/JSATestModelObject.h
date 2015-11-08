@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JSACMacros.h"
+#import <objc/runtime.h>
 
 @class JSASubTestModelObject;
 
@@ -16,8 +17,11 @@
 @property (nonatomic, strong) NSString *nameString;
 @property (nonatomic, strong) NSURL *testURL;
 @property (nonatomic, strong) NSArray *randomArray;
-@property (nonatomic, strong) NSArray *homes; __MODEL_ARRAY(JSASubTestModelObject, homes);
+@property (nonatomic, strong) NSArray *homes;
 @property (nonatomic, strong) JSASubTestModelObject *bestHome;
 @property (nonatomic, strong) NSString *unused;
 
 @end
+
+__USE_PARENT_PROPERTIES(JSATestModelObject, YES)
+__SET_ARRAY_CLASS(JSATestModelObject, homes, JSASubTestModelObject);

@@ -8,6 +8,7 @@
 
 #import "NSObject+ListOfProperties.h"
 #import <objc/runtime.h>
+#import "JSACUtility.h"
 
 NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
 
@@ -15,9 +16,16 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
 
 #pragma mark - Public Methods
 
-- (NSArray *)listOfProperties
+#pragma mark Class
+
++ (NSArray *)listOfProperties
 {
-    Class clazz = [self class];
+    Class clazz = self;
+    
+    NSArray *ignoreClasses = @[ [NSObject class], [UIView class], [UIViewController class] ];
+    if ([ignoreClasses containsObject:clazz])
+        return @[];
+    
     u_int count;
     
     objc_property_t* properties = class_copyPropertyList(clazz, &count);
@@ -29,11 +37,18 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
     }
     
     free(properties);
-
+    
+    BOOL useParent = isParentPropertiesEnable(clazz);
+    if (useParent)
+    {
+        NSArray *parentProperties = [[clazz superclass] listOfProperties];
+        [propertyArray addObjectsFromArray:parentProperties];
+    }
+    
     return [NSArray arrayWithArray:propertyArray];
 }
 
-- (NSArray *)listOfStandardProperties
++ (NSArray *)listOfStandardProperties
 {
     NSMutableArray *standardProperties = [NSMutableArray array];
     NSArray *properties = [self listOfProperties];
@@ -46,7 +61,7 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
     return [NSArray arrayWithArray:standardProperties];
 }
 
-- (NSArray *)listOfNonStandardProperties
++ (NSArray *)listOfNonStandardProperties
 {
     NSMutableArray *nonStandardProperties = [NSMutableArray array];
     NSArray *properties = [self listOfProperties];
@@ -59,11 +74,33 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
     return [NSArray arrayWithArray:nonStandardProperties];
 }
 
-- (Class)classForPropertyKey:(NSString *)key
++ (Class)classForPropertyKey:(NSString *)key
 {
     NSString *type = [self typeOfProperty:key];
     Class clazz = NSClassFromString(type);
     return clazz;
+}
+
+#pragma mark Instance
+
+- (NSArray *)listOfProperties
+{
+    return [[self class] listOfProperties];
+}
+
+- (NSArray *)listOfStandardProperties
+{
+    return [[self class] listOfStandardProperties];
+}
+
+- (NSArray *)listOfNonStandardProperties
+{
+    return [[self class] listOfNonStandardProperties];
+}
+
+- (Class)classForPropertyKey:(NSString *)key
+{
+    return [[self class] classForPropertyKey:key];
 }
 
 - (BOOL)setStandardValue:(id)value forKey:(NSString *)key
@@ -111,7 +148,12 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
 
 - (NSString *)typeOfProperty:(NSString *)propertyName
 {
-    Class clazz = [self class];
+    return [[self class] typeOfProperty:propertyName];
+}
+
++ (NSString *)typeOfProperty:(NSString *)propertyName
+{
+    Class clazz = self;
     u_int count;
     
     objc_property_t* properties = class_copyPropertyList(clazz, &count);
@@ -122,6 +164,9 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
         if ([name isEqualToString:propertyName])
             property = properties[i];
     }
+    
+    if (!property)
+        return [[clazz superclass] typeOfProperty:propertyName];
     
     NSString *propertyAttributes = [NSString stringWithCString:property_getAttributes(property) encoding:NSASCIIStringEncoding];
     free(properties);

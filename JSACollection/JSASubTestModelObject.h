@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) NSString *homeName;
 @property (nonatomic, strong) JSATertiaryTestModelObject *moreData;
-@property (nonatomic, weak) id parentModelObject; __MODEL_PARENT(parentModelObject)
+@property (nonatomic, weak) id parentModelObject;
 
 @end
+
+__SET_PARENT_REFERENCE(JSASubTestModelObject, parentModelObject)

@@ -23,5 +23,6 @@
 
 @end
 
-__USE_PARENT_PROPERTIES(JSATestModelObject, YES)
-__SET_ARRAY_CLASS(JSATestModelObject, homes, JSASubTestModelObject);
+JSAC_MODEL_CONFIGURE(JSATestModelObject, {
+    MAP_ARRAY_CLASS(homes, JSASubTestModelObject);
+})

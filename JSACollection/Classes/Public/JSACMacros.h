@@ -8,28 +8,16 @@
 
 #import "JSACUtility.h"
 
-#define __USE_PARENT_PROPERTIES(class, enabled)         \
-@interface class (JSAC_MODEL_USE_PARENT)                \
-@end                                                    \
-@implementation class (JSAC_MODEL_USE_PARENT)           \
-+ (void)load {enableParentProperties(self, enabled);}   \
-@end
+//Macros to put into the JSAC_MODEL_CONFIGURE function
+#define USE_PARENT_PROPERTIES enableParentProperties(self, YES)
+#define MAP_ARRAY_CLASS(array, class) mapArrayToClassType(self, @#array, @#class)
+#define ASSIGN_PARENT_REFERENCE(property) setParentPropertyName(self, @#property)
 
-#define __SET_PARENT_REFERENCE(class, property)         \
-@interface class (JSAC_MODEL_PARENT_REF)                \
-@end                                                    \
-@implementation class (JSAC_MODEL_PARENT_REF)           \
-+ (void)load {setParentPropertyName(self, @#property);} \
-@end
-
-#define __SET_ARRAY_CLASS(class, array, className)      \
-@interface JSATestModelObject (JSAC_MODEL_##array)      \
-@end                                                    \
-@implementation JSATestModelObject (JSAC_MODEL_##array) \
-+ (void)load                                            \
-{                                                       \
-mapArrayToClassType(self, @#array, @#className);        \
-}                                                       \
+#define JSAC_MODEL_CONFIGURE(class, func) \
+@interface class (JSAC__CONFIGURE) @end \
+@implementation class (JSAC__CONFIGURE) \
++ (void)load\
+{ func } \
 @end
 
 // Deprecated

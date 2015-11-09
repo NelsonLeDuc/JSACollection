@@ -13,4 +13,7 @@
 
 @end
 
-__USE_PARENT_PROPERTIES(JSAChildTestModel, YES)
+JSAC_MODEL_CONFIGURE(JSAChildTestModel, {
+    USE_PARENT_PROPERTIES;
+})
+

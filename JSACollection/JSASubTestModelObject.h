@@ -19,4 +19,6 @@
 
 @end
 
-__SET_PARENT_REFERENCE(JSASubTestModelObject, parentModelObject)
+JSAC_MODEL_CONFIGURE(JSASubTestModelObject, {
+    ASSIGN_PARENT_REFERENCE(parentModelObject);
+})

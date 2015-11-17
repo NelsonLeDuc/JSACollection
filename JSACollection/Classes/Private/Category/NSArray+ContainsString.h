@@ -10,7 +10,7 @@
 
 @interface NSArray (ContainsString)
 
-- (BOOL)containsString:(NSString*)string;
-- (BOOL)containsString:(NSString *)string ignoreCase:(BOOL)ignoreCase;
+- (BOOL)jsac_containsString:(NSString*)string;
+- (BOOL)jsac_containsString:(NSString *)string ignoreCase:(BOOL)ignoreCase;
 
 @end

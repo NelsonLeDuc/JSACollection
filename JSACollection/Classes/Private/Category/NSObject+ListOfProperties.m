@@ -22,7 +22,9 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
 {
     Class clazz = self;
     
-    NSArray *ignoreClasses = @[ [NSObject class], [UIView class], [UIViewController class] ];
+    Class viewClass = NSClassFromString(@"UIView") ?: NSClassFromString(@"NSView");
+    Class viewControllerClass = NSClassFromString(@"UIViewController") ?: NSClassFromString(@"NSViewController");
+    NSArray *ignoreClasses = @[ [NSObject class], viewClass, viewControllerClass ];
     if ([ignoreClasses containsObject:clazz])
         return @[];
     

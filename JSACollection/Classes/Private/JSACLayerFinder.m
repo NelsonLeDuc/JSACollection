@@ -25,7 +25,7 @@
     id obj;
     for (id key in collection)
     {
-        if (![propertyList containsString:key])
+        if (![propertyList jsac_containsString:key])
         {
             if (!obj)
                 obj = [self containerWithModelObjectProperties:propertyList fromCollection:[collection subCollectionFromKey:key] withPreviousLayer:collection fromKey:key];

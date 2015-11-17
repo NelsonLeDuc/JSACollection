@@ -40,6 +40,15 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
     return [[self alloc] initWithClass:clazz];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+- (instancetype)init
+{
+    NSAssert(NO, @"-init should not be called, call -initWithClass: instead");
+    return nil;
+}
+#pragma clang diagnostic pop
+
 - (instancetype)initWithClass:(Class)clazz
 {
     self = [super init];

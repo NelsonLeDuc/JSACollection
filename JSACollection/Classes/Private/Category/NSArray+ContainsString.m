@@ -10,12 +10,12 @@
 
 @implementation NSArray (ContainsString)
 
-- (BOOL)containsString:(NSString *)string
+- (BOOL)jsac_containsString:(NSString *)string
 {
-    return [self containsString:string ignoreCase:YES];
+    return [self jsac_containsString:string ignoreCase:YES];
 }
 
-- (BOOL)containsString:(NSString *)string ignoreCase:(BOOL)ignoreCase
+- (BOOL)jsac_containsString:(NSString *)string ignoreCase:(BOOL)ignoreCase
 {
     if (![string respondsToSelector:@selector(lowercaseString)])
     {

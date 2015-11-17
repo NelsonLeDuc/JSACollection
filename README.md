@@ -18,7 +18,7 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 Add this to your Podfile:
 
-	pod 'JSACollection', '~> 1.4'
+	pod 'JSACollection', '~> 1.5'
 
 Then run:
 	
@@ -74,14 +74,6 @@ To create a factory, the object should conform to the `JSACSerializableClassFact
 
 ## Advanced
 
-### Property Naming
-
-The way that property names map to fields contained within the collection is as follows (all of these are case insensitive):
-
-- Names will map directly to fields with the same name.
-- The first word of a name will map to a field with that name. (e.g. nameString will map to name)
-- The words of a name seperated by underscores will map to a corresponding field. (e.g. firstName will map to first_name)
-
 ### Non-Standard Types
 
 Normally the serializer will only attempt to map properties from JSON if the property type is `NSString`, `NSURL`, `NSDictionary`, `NSArray`, or one the primitive types. However the serializer has the property `allowNonStandardTypes` which is of type `BOOL`. By default this is set to `NO`, but if this is changed to be `YES`it allows the serializer to attempt to map keys to object types. 
@@ -104,29 +96,64 @@ and imagine your collection is structured like this
 ```
 on the Foo object the `nameString` will be set to `"Bob"` and the `otherFoo` field will be set to an object with its `fooString` field set to `"Foo"` and its `fooType` field set to `"strong"`.
 
+## Model Configuration
+
+Using provided macros you can allow the mapper to perform more advanced operations to map more correctly and to more complicated structures.
+```obj-c
+JSAC_MODEL_CONFIGURE(Foo, {
+    USE_PARENT_PROPERTIES;
+    MAP_ARRAY_CLASS(arrayName, className);
+    ASSIGN_PARENT_REFERENCE(propertyName);
+})
+```
+
+The macros do the following:
+
+- Allow mapping to use the superclass properties
+- Map an object to an NSArray, much like generics
+- Mark a property as being a reference to the parent object
+
 ### Non-Standard Arrays
 
-If a class has a property that is an array it will map an array from the collection directly to that field and thats it, which can be useful unless you want to have an array of `OtherFoo` instead of `NSString`. To fix this, in your header import `JSACMacros.h` and use the `__MODEL_ARRAY` macro. When implemented this will look like:
+If a class has a property that is an array it will map an array from the collection directly to that field and thats it, which can be useful unless you want to have an array of `OtherFoo` instead of `NSString`. To fix this, in your header import `JSACMacros.h` and use the `MAP_ARRAY_CLASS` macro. When implemented this will look like:
 ```obj-c
 @interface Foo : NSObject
 
-@property (nonatomic, strong) NSArray *otherFooArray; __MODEL_ARRAY(OtherFoo, otherFooArray);
+@property (nonatomic, strong) NSArray *otherFooArray;
 
 @end
+
+JSAC_MODEL_CONFIGURE(Foo, {
+    MAP_ARRAY_CLASS(otherFooArray, OtherFoo);
+})
 ```
 and thats it, your `otherFooArray` will now be full of `OtherFoo` objects.
 
 ### Parent Objects
 
-If a class has a non-standard object on it and you would like that object to have a reference to its parent object simply use the provided macro. In your header import `JSACMacros.h` and use the __MODEL_PARENT macro, which will look like below when implemented.
+If a class has a non-standard object on it and you would like that object to have a reference to its parent object simply use the provided macro. In your header import `JSACMacros.h` and use the `ASSIGN_PARENT_REFERENCE` macro, which will look like below when implemented.
 ```obj-c
 @interface Foo : NSObject
 
-@property (nonatomic, strong) id parent; __MODEL_PARENT(parent);
+@property (nonatomic, strong) id parent;
 
 @end
+
+JSAC_MODEL_CONFIGURE(Foo, {
+    ASSIGN_PARENT_REFERENCE(parent);
+})
 ```
 thats all you need to do, the parent property will now hold a reference to Foo's parent object.
+
+## Details
+
+### Property Naming
+
+The way that property names map to fields contained within the collection is as follows (all of these are case insensitive):
+
+- Names will map directly to fields with the same name.
+- The first word of a name will map to a field with that name. (e.g. nameString will map to name)
+- The words of a name seperated by underscores will map to a corresponding field. (e.g. firstName will map to first_name)
 
 ## Requirements
 

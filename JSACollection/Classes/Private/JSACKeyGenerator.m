@@ -15,23 +15,20 @@ static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
 
 + (NSDictionary *)keyListFromClass:(Class)class
 {
-    id obj = [[class alloc] init];
-    NSArray *propeties = [obj listOfProperties];
-    return [self generatedKeyListFromArray:propeties];
+    NSArray *properties = [class listOfProperties];
+    return [self generatedKeyListFromArray:properties];
 }
 
 + (NSDictionary *)standardKeyListFromClass:(Class)class
 {
-    id obj = [[class alloc] init];
-    NSArray *propeties = [obj listOfStandardProperties];
-    return [self generatedKeyListFromArray:propeties];
+    NSArray *properties = [class listOfStandardProperties];
+    return [self generatedKeyListFromArray:properties];
 }
 
 + (NSDictionary *)nonStandardKeyListFromClass:(Class)class
 {
-    id obj = [[class alloc] init];
-    NSArray *propeties = [obj listOfNonStandardProperties];
-    return [self generatedKeyListFromArray:propeties];
+    NSArray *properties = [class listOfNonStandardProperties];
+    return [self generatedKeyListFromArray:properties];
 }
 
 + (NSDictionary *)generatedKeyListFromArray:(NSArray *)array

@@ -34,48 +34,34 @@ static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
 + (NSDictionary *)generatedKeyListFromArray:(NSArray *)array
 {
     NSMutableDictionary *keyDict = [[NSMutableDictionary alloc] init];
+    NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"([a-z])([A-Z])" options:0 error:nil];
+    
     for (NSString *propertyName in array)
     {
         NSString *prop = propertyName;
-        if ([[prop lowercaseString] hasPrefix:kJSACollectionPropertyPrefix] && [prop length] > [kJSACollectionPropertyPrefix length])
-        {
+        if ([[prop lowercaseString] hasPrefix:kJSACollectionPropertyPrefix] && [prop length] > [kJSACollectionPropertyPrefix length]) {
             prop = [prop substringFromIndex:[kJSACollectionPropertyPrefix length]];
         }
         
-        [keyDict setValue:propertyName forKey:prop];
+        NSTextCheckingResult *first = [regexp firstMatchInString:prop options:0 range:NSMakeRange(0, prop.length)];
+        NSString *firstWord = [prop substringToIndex:first.range.location + 1];
+        if (first && firstWord) {
+            keyDict[firstWord] = propertyName;
+        }
         
-        int indexOfUppercase = 0;
-        for (int i = 0; i < prop.length && indexOfUppercase == 0; i++)
-        {
-            BOOL isUppercase = [[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[prop characterAtIndex:i]];
-            if (isUppercase)
-                indexOfUppercase = i;
+        NSString *underscores = [regexp stringByReplacingMatchesInString:propertyName options:0 range:NSMakeRange(0, propertyName.length) withTemplate:@"$1_$2"];
+        NSString *dashes = [regexp stringByReplacingMatchesInString:propertyName options:0 range:NSMakeRange(0, propertyName.length) withTemplate:@"$1-$2"];
+        if (underscores) {
+            keyDict[underscores] = propertyName;
         }
-        if (indexOfUppercase > 0)
-        {
-            NSString *firstWord = [prop substringToIndex:indexOfUppercase];
-            [keyDict setValue:propertyName forKey:firstWord];
-            
-            NSMutableString *underscoredWords = [NSMutableString stringWithString:prop];
-            NSMutableString *dashedWords = [NSMutableString stringWithString:prop];
-            BOOL prevUppercase = NO;
-            while (indexOfUppercase < [underscoredWords length])
-            {
-                BOOL uppercase = [[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[underscoredWords characterAtIndex:indexOfUppercase]];
-                if (uppercase && !prevUppercase)
-                {
-                    [underscoredWords insertString:@"_" atIndex:indexOfUppercase];
-                    [dashedWords insertString:@"-" atIndex:indexOfUppercase];
-                    indexOfUppercase++;
-                }
-                indexOfUppercase++;
-                prevUppercase = uppercase;
-            }
-            [keyDict setValue:propertyName forKey:underscoredWords];
-            [keyDict setValue:propertyName forKey:dashedWords];
+        if (dashes) {
+            keyDict[dashes] = propertyName;
         }
+        
+        keyDict[propertyName] = propertyName;
     }
-    return [NSDictionary dictionaryWithDictionary:keyDict];
+    
+    return [keyDict copy];
 }
 
 @end

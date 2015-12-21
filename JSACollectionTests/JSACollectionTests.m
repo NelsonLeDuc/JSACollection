@@ -150,7 +150,7 @@
     JSACObjectMapper *mapper = [JSACObjectMapper objectMapperForClass:[JSATestModelObject class]];
     mapper.allowNonStandardTypes = YES;
     JSACObjectMapper *subMapper = [JSACObjectMapper objectMapperForClass:[JSASubTestModelObject class]];
-    [subMapper setSetterBlock:^id (NSDictionary *dict, id object) {
+    [subMapper setSetterBlock:^id (id<KeyValueAccessible> dict, id object) {
         
         [object setHomeName:@"My Fave"];
         return object;
@@ -182,7 +182,7 @@
 - (void)testGenerateFromClassWithMapperCustomSetter
 {
     JSACObjectMapper *mapper = [JSACObjectMapper objectMapperForClass:[JSATestModelObject class]];
-    [mapper setSetterBlock:^id (NSDictionary *dict, id obj) {
+    [mapper setSetterBlock:^id (id<KeyValueAccessible> dict, id obj) {
         
         JSATestModelObject *model = obj;
         model.nameString = @"Test1";

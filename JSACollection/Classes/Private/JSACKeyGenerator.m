@@ -13,21 +13,20 @@ static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
 
 @implementation JSACKeyGenerator
 
-+ (NSDictionary *)keyListFromClass:(Class)class
-{
-    NSArray *properties = [class listOfProperties];
-    return [self generatedKeyListFromArray:properties];
-}
-
-+ (NSDictionary *)standardKeyListFromClass:(Class)class
-{
-    NSArray *properties = [class listOfStandardProperties];
-    return [self generatedKeyListFromArray:properties];
-}
-
-+ (NSDictionary *)nonStandardKeyListFromClass:(Class)class
-{
-    NSArray *properties = [class listOfNonStandardProperties];
++ (NSDictionary *)keyListFromClass:(Class)clazz ofType:(JSACKeyGeneratorKeyType)type {
+    NSArray *properties = nil;
+    switch (type) {
+        case JSACKeyGeneratorKeyTypeAll:
+            properties = [clazz listOfProperties];
+            break;
+        case JSACKeyGeneratorKeyTypeNonStandard:
+            properties = [clazz listOfNonStandardProperties];
+            break;
+        case JSACKeyGeneratorKeyTypeStandard:
+            properties = [clazz listOfStandardProperties];
+            break;
+    }
+    
     return [self generatedKeyListFromArray:properties];
 }
 

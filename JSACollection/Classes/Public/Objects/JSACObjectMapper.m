@@ -8,9 +8,12 @@
 
 #import "JSACObjectMapper.h"
 #import "JSACKeyGenerator.h"
-#import "NSObject+ListOfProperties.h"
 #import "JSACCollectionSerializer.h"
 #import "JSACUtility.h"
+
+#import "NSArray+ContainsString.h"
+#import "NSObject+ListOfProperties.h"
+#import "NSDictionary+JSACAdditions.h"
 
 static NSString * const kJSACollectionModelArrayPrefix = @"MODEL_ARRAY_%@";
 static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
@@ -27,7 +30,7 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
 @property (nonatomic, assign) BOOL usingCustomDictionary;
 @property (nonatomic, strong) NSDictionary *keyDictionary;
 @property (nonatomic, strong) Class objectClass;
-@property (nonatomic, strong) NSMutableDictionary *virtualDictionary;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, JSACObjectMapperPropertySetterBlock> *virtualDictionary;
 @property (nonatomic, strong) NSMutableDictionary *subMapperDictionary;
 @property (nonatomic, strong) id parentObject;
 
@@ -35,25 +38,21 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
 
 @implementation JSACObjectMapper
 
-+ (instancetype)objectMapperForClass:(Class)clazz
-{
++ (instancetype)objectMapperForClass:(Class)clazz {
     return [[self alloc] initWithClass:clazz];
 }
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
-- (instancetype)init
-{
+- (instancetype)init {
     NSAssert(NO, @"-init should not be called, call -initWithClass: instead");
     return nil;
 }
 #pragma clang diagnostic pop
 
-- (instancetype)initWithClass:(Class)clazz
-{
+- (instancetype)initWithClass:(Class)clazz {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         _objectClass = clazz;
         _allowNonStandardTypes = NO;
         _usingCustomDictionary = NO;
@@ -62,157 +61,126 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
     return self;
 }
 
-- (NSDictionary *)keyDictionary
-{
-    if (!_keyDictionary)
-    {
+#pragma mark - Getters / Setters
+
+- (NSDictionary *)keyDictionary {
+    if (!_keyDictionary) {
         NSDictionary *keyDict;
-        
-        if ([self.objectClass respondsToSelector:@selector(JSONKeyMapping)])
-        {
+        if ([self.objectClass respondsToSelector:@selector(JSONKeyMapping)]) {
             keyDict = [self.objectClass JSONKeyMapping];
             NSAssert(keyDict, @"Custom implementation of JSONKeyMapping must not return a nil dictionary.");
-        }
-        else if (self.allowNonStandardTypes)
-        {
-            keyDict = [JSACKeyGenerator keyListFromClass:self.objectClass];
-        }
-        else
-        {
-            keyDict = [JSACKeyGenerator standardKeyListFromClass:self.objectClass];
+        } else {
+            JSACKeyGeneratorKeyType type = self.allowNonStandardTypes ? JSACKeyGeneratorKeyTypeAll : JSACKeyGeneratorKeyTypeStandard;
+            keyDict = [JSACKeyGenerator keyListFromClass:self.objectClass ofType:type];
         }
         
-        if (!keyDict || ![keyDict count])
-        {
-            keyDict = [NSDictionary dictionary];
-        }
+        keyDict = keyDict ?: @{};
         
-        NSMutableDictionary *virtualDict = [[JSACKeyGenerator generatedKeyListFromArray:[self.virtualDictionary allKeys]] mutableCopy];
+        NSMutableDictionary *virtualDict = [[JSACKeyGenerator generatedKeyListFromArray:self.virtualDictionary.allKeys] mutableCopy];
         [virtualDict addEntriesFromDictionary:keyDict];
-        keyDict = [virtualDict copy];
         
-        _keyDictionary = keyDict;
+        _keyDictionary = [virtualDict copy];
     }
     
     return _keyDictionary;
 }
 
-- (void)setAllowNonStandardTypes:(BOOL)allowNonStandardTypes
-{
-    if (_allowNonStandardTypes == allowNonStandardTypes)
+- (void)setAllowNonStandardTypes:(BOOL)allowNonStandardTypes {
+    if (_allowNonStandardTypes == allowNonStandardTypes) {
         return;
+    }
     
     _allowNonStandardTypes = allowNonStandardTypes;
     
-    if (!self.usingCustomDictionary)
+    if (!self.usingCustomDictionary) {
         self.keyDictionary = nil;
+    }
 }
 
-- (NSMutableDictionary *)virtualDictionary
-{
-    if (!_virtualDictionary)
+- (NSMutableDictionary<NSString *, JSACObjectMapperPropertySetterBlock> *)virtualDictionary {
+    if (!_virtualDictionary) {
         _virtualDictionary = [NSMutableDictionary dictionary];
+    }
     
     return _virtualDictionary;
 }
 
 - (NSMutableDictionary *)subMapperDictionary
 {
-    if (!_subMapperDictionary)
+    if (!_subMapperDictionary) {
         _subMapperDictionary = [NSMutableDictionary dictionary];
+    }
     
     return _subMapperDictionary;
 }
 
-- (void)addSetterForPropertyWithName:(NSString *)name withBlock:(JSACObjectMapperPropertySetterBlock)block
-{
-    if (!block || !name)
+#pragma mark - Public Methods
+
+- (void)addSetterForPropertyWithName:(NSString *)name withBlock:(JSACObjectMapperPropertySetterBlock)block {
+    if (!block || !name) {
         return;
+    }
     
     [self.virtualDictionary setObject:block forKey:name];
 }
 
-- (void)addSubObjectMapper:(JSACObjectMapper *)mapper forPropertyName:(NSString *)name
-{
+- (void)addSubObjectMapper:(JSACObjectMapper *)mapper forPropertyName:(NSString *)name {
     if (!mapper || !name)
         return;
     
     [self.subMapperDictionary setObject:mapper forKey:name];
 }
 
-- (void)setCustomKeyDictionary:(NSDictionary *)keyDictionary
-{
+- (void)setCustomKeyDictionary:(NSDictionary *)keyDictionary {
     self.keyDictionary = keyDictionary;
     self.usingCustomDictionary = !keyDictionary ? NO : YES;
 }
 
 #pragma mark - JSACSerializableClassFactory
 
-- (NSArray *)listOfKeys
-{
+- (NSArray *)listOfKeys {
     return [self.keyDictionary allKeys];
 }
 
-- (id)objectForDictionary:(NSDictionary *)dictionary forCollectionSerializer:(JSACCollectionSerializer *)serializer
-{
+- (nonnull id)objectForDictionary:(nonnull id<KeyValueAccessible>)dictionary forCollectionSerializer:(nonnull JSACCollectionSerializer *)serializer {
     NSDictionary *userInfo;
-    if (self.dateFormatter)
-    {
+    if (self.dateFormatter) {
         userInfo = @{ JSACUserInfoDateFormatterKey : self.dateFormatter };
     }
     
-    NSDictionary *normalizedDict = dictionary;
-    if ([normalizedDict isKindOfClass:[NSDictionary class]])
-    {
-        NSMutableDictionary *normalDict = [NSMutableDictionary dictionary];
-        [normalizedDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [normalDict setObject:obj forKey:[key lowercaseString]];
-        }];
-        normalizedDict = normalDict;
+    id<KeyValueAccessible> normalizedDict = dictionary;
+    if ([normalizedDict isKindOfClass:[NSDictionary class]]) {
+        normalizedDict = (id<KeyValueAccessible>)[(NSDictionary *)normalizedDict jsac_lowercaseKeyDictionary];
     }
     
     id modelObject = [[self.objectClass alloc] init];
     NSString *parentPropName = parentPropertyName(self.objectClass);
     
-    if (self.setterBlock)
-    {
+    if (self.setterBlock) {
         modelObject = self.setterBlock(dictionary, modelObject);
-    }
-    else
-    {
-        for (NSString *key in [self listOfKeys])
-        {
+    } else {
+        
+        for (NSString *key in [self listOfKeys]) {
             NSString *objectKey = [self.keyDictionary valueForKey:key];
             id value = [normalizedDict valueForKey:[key lowercaseString]];
-            if (!value)
-            {
-                if ([key isEqualToString:parentPropName] && self.parentObject)
-                {
+            if (!value) {
+                if ([key isEqualToString:parentPropName] && self.parentObject) {
                     [modelObject setValue:self.parentObject forKey:objectKey];
-                }
-                else
-                {
-                    NSString *modelParentString = [NSString stringWithFormat:kJSACollectionModelParentPrefix, key];
-                    if ([[self class] stringArray:[modelObject listOfProperties] containsString:modelParentString]
-                        && self.parentObject)
-                    {
-                        [modelObject setValue:self.parentObject forKey:objectKey];
-                    }
+                } else if ([[modelObject listOfProperties] jsac_containsString:[NSString stringWithFormat:kJSACollectionModelParentPrefix, key]]
+                           && self.parentObject) {
+                    [modelObject setValue:objectKey forKey:self.parentObject];
                 }
                 
                 continue;
             }
             
-            if ([self.virtualDictionary objectForKey:objectKey])
-            {
-                JSACObjectMapperPropertySetterBlock propBlock = self.virtualDictionary[objectKey];
-                propBlock(value, modelObject);
-            }
-            else if (![self setupModelArrayIfNecessaryWithValue:value forKey:objectKey onObject:modelObject withSerializer:serializer])
-            {
+            if ([self.virtualDictionary objectForKey:objectKey]) {
+                self.virtualDictionary[objectKey](value, modelObject);
+            } else if (![self setupModelArrayIfNecessaryWithValue:value forKey:objectKey onObject:modelObject withSerializer:serializer]) {
                 BOOL standard = [modelObject setStandardValue:value forKey:objectKey userInfo:userInfo];
-                if (!standard && self.allowNonStandardTypes)
+                if (!standard && self.allowNonStandardTypes) {
                     [self setNonStandardValue:value onObject:modelObject forKey:objectKey withSerializer:serializer];
+                }
             }
         }
     }
@@ -222,43 +190,33 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
 
 #pragma mark - Private
 
-- (BOOL)setupModelArrayIfNecessaryWithValue:(id)value forKey:(NSString *)key onObject:(id)object withSerializer:(JSACCollectionSerializer *)serializer
-{
+- (BOOL)setupModelArrayIfNecessaryWithValue:(id)value forKey:(NSString *)key onObject:(id)object withSerializer:(JSACCollectionSerializer *)serializer {
     NSDictionary *arrayTypeMap = mappedArrayClassTypes(self.objectClass);
-    if (arrayTypeMap)
-    {
+    Class clazz;
+    
+    if (arrayTypeMap) {
         NSString *arrayType = arrayTypeMap[key];
-        
-        if (!arrayType)
+        if (!arrayType) {
             return NO;
+        }
         
-        Class clazz = NSClassFromString(arrayType);
-        if (!clazz)
-            return NO;
-        
-        JSACObjectMapper *subMapper = self.subMapperDictionary[key];
-        if (!subMapper)
-            subMapper = [JSACObjectMapper objectMapperForClass:clazz];
-        
-        NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
-        [object setStandardValue:array forKey:key];
-    }
-    else
-    {
+        clazz = NSClassFromString(arrayType);
+    } else {
         NSString *modelArrayString = [NSString stringWithFormat:kJSACollectionModelArrayPrefix, key];
-        BOOL exists = [[self class] stringArray:[object listOfProperties] containsString:modelArrayString];
-        
-        if (!exists)
+        if (![[object listOfProperties] jsac_containsString:modelArrayString]) {
             return NO;
+        }
         
-        Class clazz = [object classForPropertyKey:modelArrayString];
-        JSACObjectMapper *subMapper = self.subMapperDictionary[key];
-        if (!subMapper)
-            subMapper = [JSACObjectMapper objectMapperForClass:clazz];
-        
-        NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
-        [object setStandardValue:array forKey:key];
+        clazz = [object classForPropertyKey:modelArrayString];
     }
+    
+    if (!clazz) {
+        return NO;
+    }
+    
+    JSACObjectMapper *subMapper = self.subMapperDictionary[key] ?: [JSACObjectMapper objectMapperForClass:clazz];
+    NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
+    [object setStandardValue:array forKey:key];
     
     return YES;
 }
@@ -266,39 +224,25 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
 
 - (BOOL)setNonStandardValue:(id)value onObject:(id)object forKey:(NSString *)key withSerializer:(JSACCollectionSerializer *)serializer
 {
-    if (object == nil || key == nil || object == [NSNull null])
+    if (object == nil || object == [NSNull null] || key == nil) {
         return NO;
+    }
     
     Class clazz = [object classForPropertyKey:key];
     JSACObjectMapper *subMapper = self.subMapperDictionary[key];
-    if (!subMapper)
-    {
+    if (!subMapper) {
         subMapper = [JSACObjectMapper objectMapperForClass:clazz];
         subMapper.allowNonStandardTypes = self.allowNonStandardTypes;
     }
     subMapper.parentObject = object;
     
     NSArray *array = [serializer generateModelObjectsWithSerializableClassFactory:subMapper fromContainer:value];
-    if (array)
-        if (key)
-            if ([array firstObject])
-            {
-                [object setValue:[array firstObject] forKey:key];
-                return YES;
-            }
-    return NO;
-}
-
-#pragma mark - Convenience
-
-+ (BOOL)stringArray:(NSArray *)array containsString:(NSString *)string
-{
-    BOOL exists = NO;
-    for (NSString *k in array)
-        if ([k isEqualToString:string])
-            exists = YES;
+    if ([array count] && key) {
+        [object setValue:[array firstObject] forKey:key];
+        return YES;
+    }
     
-    return exists;
+    return NO;
 }
 
 @end

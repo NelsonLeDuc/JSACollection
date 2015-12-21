@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "JSACSerializableClassFactory.h"
 
-typedef id(^JSACObjectMapperObjectSetterBlock)(NSDictionary *dict, id object);
+typedef id(^JSACObjectMapperObjectSetterBlock)(id<KeyValueAccessible> dict, id object);
 typedef void(^JSACObjectMapperPropertySetterBlock)(id value, id object);
 
 @interface JSACObjectMapper : NSObject <JSACSerializableClassFactory>

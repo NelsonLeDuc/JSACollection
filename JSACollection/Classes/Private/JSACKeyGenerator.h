@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, JSACKeyGeneratorKeyType) {
+    JSACKeyGeneratorKeyTypeAll,
+    JSACKeyGeneratorKeyTypeStandard,
+    JSACKeyGeneratorKeyTypeNonStandard
+};
+
 @interface JSACKeyGenerator : NSObject
 
-+ (NSDictionary *)keyListFromClass:(Class)class;
-+ (NSDictionary *)standardKeyListFromClass:(Class)class;
-+ (NSDictionary *)nonStandardKeyListFromClass:(Class)class;
-
++ (NSDictionary *)keyListFromClass:(Class)clazz ofType:(JSACKeyGeneratorKeyType)type;
 + (NSDictionary *)generatedKeyListFromArray:(NSArray *)array;
 
 @end

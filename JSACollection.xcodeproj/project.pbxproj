@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		391D43731C27D30F004DB601 /* NSDictionary+JSACAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 391D43721C27D30F004DB601 /* NSDictionary+JSACAdditions.m */; };
 		391D439D1C2B92B7004DB601 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391D439B1C2B92B7004DB601 /* Collection.swift */; };
+		395321821C2CAE9B00C5F7B5 /* SerializableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395321811C2CAE9B00C5F7B5 /* SerializableContainer.swift */; };
 		3964D16E1C2C7E9400BDE0CA /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3964D16D1C2C7E9400BDE0CA /* Mapper.swift */; };
 		3969100C1C2B9DB300ABEB88 /* SwiftTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3969100B1C2B9DB300ABEB88 /* SwiftTest.swift */; };
 		398768301A96FEDC004E8EC5 /* NSArray+ContainsString.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768151A96FEDC004E8EC5 /* NSArray+ContainsString.m */; };
@@ -60,9 +61,10 @@
 /* Begin PBXFileReference section */
 		391D43711C27D30F004DB601 /* NSDictionary+JSACAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JSACAdditions.h"; sourceTree = "<group>"; };
 		391D43721C27D30F004DB601 /* NSDictionary+JSACAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSACAdditions.m"; sourceTree = "<group>"; };
-		391D439B1C2B92B7004DB601 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Collection.swift; path = Public/Swift/Collection.swift; sourceTree = "<group>"; };
-		391D439C1C2B92B7004DB601 /* JSACollection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JSACollection-Bridging-Header.h"; path = "Public/Swift/JSACollection-Bridging-Header.h"; sourceTree = "<group>"; };
-		3964D16D1C2C7E9400BDE0CA /* Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mapper.swift; path = Public/Swift/Mapper.swift; sourceTree = "<group>"; };
+		391D439B1C2B92B7004DB601 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		391D439C1C2B92B7004DB601 /* JSACollection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSACollection-Bridging-Header.h"; sourceTree = "<group>"; };
+		395321811C2CAE9B00C5F7B5 /* SerializableContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerializableContainer.swift; sourceTree = "<group>"; };
+		3964D16D1C2C7E9400BDE0CA /* Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		3969100A1C2B9DB200ABEB88 /* JSACollectionTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSACollectionTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		3969100B1C2B9DB300ABEB88 /* SwiftTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftTest.swift; sourceTree = "<group>"; };
 		398768141A96FEDC004E8EC5 /* NSArray+ContainsString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ContainsString.h"; sourceTree = "<group>"; };
@@ -155,9 +157,9 @@
 				391D439B1C2B92B7004DB601 /* Collection.swift */,
 				391D439C1C2B92B7004DB601 /* JSACollection-Bridging-Header.h */,
 				3964D16D1C2C7E9400BDE0CA /* Mapper.swift */,
+				395321811C2CAE9B00C5F7B5 /* SerializableContainer.swift */,
 			);
-			name = Swift;
-			path = ..;
+			path = Swift;
 			sourceTree = "<group>";
 		};
 		398768111A96FEDC004E8EC5 /* Classes */ = {
@@ -190,10 +192,10 @@
 			children = (
 				398768141A96FEDC004E8EC5 /* NSArray+ContainsString.h */,
 				398768151A96FEDC004E8EC5 /* NSArray+ContainsString.m */,
-				398768161A96FEDC004E8EC5 /* NSObject+ListOfProperties.h */,
-				398768171A96FEDC004E8EC5 /* NSObject+ListOfProperties.m */,
 				391D43711C27D30F004DB601 /* NSDictionary+JSACAdditions.h */,
 				391D43721C27D30F004DB601 /* NSDictionary+JSACAdditions.m */,
+				398768161A96FEDC004E8EC5 /* NSObject+ListOfProperties.h */,
+				398768171A96FEDC004E8EC5 /* NSObject+ListOfProperties.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -223,13 +225,13 @@
 		398768261A96FEDC004E8EC5 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				3987682B1A96FEDC004E8EC5 /* Objects */,
+				3987682E1A96FEDC004E8EC5 /* Protocol */,
 				391D43971C2B9281004DB601 /* Swift */,
 				398768271A96FEDC004E8EC5 /* JSACCollectionSerializer.h */,
 				398768281A96FEDC004E8EC5 /* JSACCollectionSerializer.m */,
 				398768291A96FEDC004E8EC5 /* JSACMacros.h */,
 				3987682A1A96FEDC004E8EC5 /* JSACollection.h */,
-				3987682B1A96FEDC004E8EC5 /* Objects */,
-				3987682E1A96FEDC004E8EC5 /* Protocol */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -254,9 +256,9 @@
 		52702C3318E831860017F36D = {
 			isa = PBXGroup;
 			children = (
+				52702C3E18E831860017F36D /* Frameworks */,
 				52702C4518E831860017F36D /* JSACollection */,
 				52702C6418E831870017F36D /* JSACollectionTests */,
-				52702C3E18E831860017F36D /* Frameworks */,
 				52702C3D18E831860017F36D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -284,20 +286,20 @@
 		52702C4518E831860017F36D /* JSACollection */ = {
 			isa = PBXGroup;
 			children = (
+				398768111A96FEDC004E8EC5 /* Classes */,
+				52702C4618E831860017F36D /* Supporting Files */,
 				52702C4E18E831860017F36D /* JSAAppDelegate.h */,
 				52702C4F18E831860017F36D /* JSAAppDelegate.m */,
-				5234696118EA0EBA0072B094 /* JSATestModelObject.h */,
-				5234696218EA0EBA0072B094 /* JSATestModelObject.m */,
 				39ABA0011A9A95C900892279 /* JSASubTestModelObject.h */,
 				39ABA0021A9A95C900892279 /* JSASubTestModelObject.m */,
 				39F2937A1B55F28A006D4CD8 /* JSATertiaryTestModelObject.h */,
 				39F2937B1B55F28A006D4CD8 /* JSATertiaryTestModelObject.m */,
+				5234696118EA0EBA0072B094 /* JSATestModelObject.h */,
+				5234696218EA0EBA0072B094 /* JSATestModelObject.m */,
 				52702C5418E831860017F36D /* JSAViewController.h */,
 				52702C5518E831860017F36D /* JSAViewController.m */,
 				52702C9618E832330017F36D /* JSAViewController.xib */,
 				39A7E06E1A71A07000031D88 /* test.json */,
-				398768111A96FEDC004E8EC5 /* Classes */,
-				52702C4618E831860017F36D /* Supporting Files */,
 			);
 			path = JSACollection;
 			sourceTree = "<group>";
@@ -305,29 +307,29 @@
 		52702C4618E831860017F36D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				52702C4718E831860017F36D /* JSACollection-Info.plist */,
 				52702C4818E831860017F36D /* InfoPlist.strings */,
-				52702C4B18E831860017F36D /* main.m */,
+				52702C4718E831860017F36D /* JSACollection-Info.plist */,
 				52702C4D18E831860017F36D /* JSACollection-Prefix.pch */,
+				52702C4B18E831860017F36D /* main.m */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		52702C6418E831870017F36D /* JSACollectionTests */ = {
 			isa = PBXGroup;
 			children = (
+				52702C6518E831870017F36D /* Supporting Files */,
+				F854F6ED1BEF2A0600BCA8EE /* JSAChildTestModel.h */,
+				F854F6EE1BEF2A0600BCA8EE /* JSAChildTestModel.m */,
+				3969100A1C2B9DB200ABEB88 /* JSACollectionTests-Bridging-Header.h */,
+				52702C6A18E831870017F36D /* JSACollectionTests.m */,
+				F854F6EA1BEF29C300BCA8EE /* JSAParentTestModel.h */,
+				F854F6EB1BEF29C300BCA8EE /* JSAParentTestModel.m */,
+				3969100B1C2B9DB300ABEB88 /* SwiftTest.swift */,
 				39AB9FFF1A9A947A00892279 /* test1.json */,
 				39ABA0041A9EE5A000892279 /* test2.json */,
 				39E97DE21AD4E78600D8BD0C /* test3.json */,
 				F854F6F01BEF2A7700BCA8EE /* test4.json */,
-				52702C6A18E831870017F36D /* JSACollectionTests.m */,
-				3969100B1C2B9DB300ABEB88 /* SwiftTest.swift */,
-				52702C6518E831870017F36D /* Supporting Files */,
-				F854F6EA1BEF29C300BCA8EE /* JSAParentTestModel.h */,
-				F854F6EB1BEF29C300BCA8EE /* JSAParentTestModel.m */,
-				F854F6ED1BEF2A0600BCA8EE /* JSAChildTestModel.h */,
-				F854F6EE1BEF2A0600BCA8EE /* JSAChildTestModel.m */,
-				3969100A1C2B9DB200ABEB88 /* JSACollectionTests-Bridging-Header.h */,
 			);
 			path = JSACollectionTests;
 			sourceTree = "<group>";
@@ -335,10 +337,10 @@
 		52702C6518E831870017F36D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				52702C6618E831870017F36D /* JSACollectionTests-Info.plist */,
 				52702C6718E831870017F36D /* InfoPlist.strings */,
+				52702C6618E831870017F36D /* JSACollectionTests-Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,6 +454,7 @@
 				39F2937C1B55F28A006D4CD8 /* JSATertiaryTestModelObject.m in Sources */,
 				398768321A96FEDC004E8EC5 /* JSACArrayCollection.m in Sources */,
 				52702C4C18E831860017F36D /* main.m in Sources */,
+				395321821C2CAE9B00C5F7B5 /* SerializableContainer.swift in Sources */,
 				398768381A96FEDC004E8EC5 /* JSACCollectionSerializer.m in Sources */,
 				398768301A96FEDC004E8EC5 /* NSArray+ContainsString.m in Sources */,
 				398768341A96FEDC004E8EC5 /* JSACDictionaryCollection.m in Sources */,
@@ -498,6 +501,7 @@
 				52702C4918E831860017F36D /* en */,
 			);
 			name = InfoPlist.strings;
+			path = .;
 			sourceTree = "<group>";
 		};
 		52702C6718E831870017F36D /* InfoPlist.strings */ = {
@@ -506,6 +510,7 @@
 				52702C6818E831870017F36D /* en */,
 			);
 			name = InfoPlist.strings;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -593,8 +598,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_TESTABILITY = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JSACollection/JSACollection-Prefix.pch";
-				INFOPLIST_FILE = "JSACollection/JSACollection-Info.plist";
+				GCC_PREFIX_HEADER = "JSACollection/Supporting Files/JSACollection-Prefix.pch";
+				INFOPLIST_FILE = "JSACollection/Supporting Files/JSACollection-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -614,8 +619,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_TESTABILITY = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JSACollection/JSACollection-Prefix.pch";
-				INFOPLIST_FILE = "JSACollection/JSACollection-Info.plist";
+				GCC_PREFIX_HEADER = "JSACollection/Supporting Files/JSACollection-Prefix.pch";
+				INFOPLIST_FILE = "JSACollection/Supporting Files/JSACollection-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -635,12 +640,12 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JSACollection/JSACollection-Prefix.pch";
+				GCC_PREFIX_HEADER = "JSACollection/Supporting Files/JSACollection-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "JSACollectionTests/JSACollectionTests-Info.plist";
+				INFOPLIST_FILE = "JSACollectionTests/Supporting Files/JSACollectionTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JSACollectionTests/JSACollectionTests-Bridging-Header.h";
@@ -661,8 +666,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JSACollection/JSACollection-Prefix.pch";
-				INFOPLIST_FILE = "JSACollectionTests/JSACollectionTests-Info.plist";
+				GCC_PREFIX_HEADER = "JSACollection/Supporting Files/JSACollection-Prefix.pch";
+				INFOPLIST_FILE = "JSACollectionTests/Supporting Files/JSACollectionTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JSACollectionTests/JSACollectionTests-Bridging-Header.h";

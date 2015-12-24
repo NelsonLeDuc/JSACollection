@@ -20,6 +20,6 @@
 @required
 
 - (nonnull NSArray *)listOfKeys;
-- (nonnull id)objectForDictionary:(nonnull id<KeyValueAccessible>)dictionary forCollectionSerializer:(nonnull JSACCollectionSerializer *)serializer;
+- (nullable id)objectForDictionary:(nonnull id<KeyValueAccessible>)dictionary forCollectionSerializer:(nonnull JSACCollectionSerializer *)serializer;
 
 @end

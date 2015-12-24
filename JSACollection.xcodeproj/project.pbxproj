@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		391D43731C27D30F004DB601 /* NSDictionary+JSACAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 391D43721C27D30F004DB601 /* NSDictionary+JSACAdditions.m */; };
 		391D439D1C2B92B7004DB601 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391D439B1C2B92B7004DB601 /* Collection.swift */; };
+		3964D16C1C2BBD8B00BDE0CA /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3964D16B1C2BBD8B00BDE0CA /* Mapper.swift */; };
 		3969100C1C2B9DB300ABEB88 /* SwiftTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3969100B1C2B9DB300ABEB88 /* SwiftTest.swift */; };
 		398768301A96FEDC004E8EC5 /* NSArray+ContainsString.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768151A96FEDC004E8EC5 /* NSArray+ContainsString.m */; };
 		398768311A96FEDC004E8EC5 /* NSObject+ListOfProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 398768171A96FEDC004E8EC5 /* NSObject+ListOfProperties.m */; };
@@ -61,6 +62,7 @@
 		391D43721C27D30F004DB601 /* NSDictionary+JSACAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSACAdditions.m"; sourceTree = "<group>"; };
 		391D439B1C2B92B7004DB601 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Collection.swift; path = Public/Swift/Collection.swift; sourceTree = "<group>"; };
 		391D439C1C2B92B7004DB601 /* JSACollection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JSACollection-Bridging-Header.h"; path = "Public/Swift/JSACollection-Bridging-Header.h"; sourceTree = "<group>"; };
+		3964D16B1C2BBD8B00BDE0CA /* Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		3969100A1C2B9DB200ABEB88 /* JSACollectionTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSACollectionTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		3969100B1C2B9DB300ABEB88 /* SwiftTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftTest.swift; sourceTree = "<group>"; };
 		398768141A96FEDC004E8EC5 /* NSArray+ContainsString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ContainsString.h"; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				391D439B1C2B92B7004DB601 /* Collection.swift */,
 				391D439C1C2B92B7004DB601 /* JSACollection-Bridging-Header.h */,
+				3964D16B1C2BBD8B00BDE0CA /* Mapper.swift */,
 			);
 			name = Swift;
 			path = ..;
@@ -459,6 +462,7 @@
 				5234696318EA0EBA0072B094 /* JSATestModelObject.m in Sources */,
 				398768361A96FEDC004E8EC5 /* JSACKeyGenerator.m in Sources */,
 				39ABA0031A9A95C900892279 /* JSASubTestModelObject.m in Sources */,
+				3964D16C1C2BBD8B00BDE0CA /* Mapper.swift in Sources */,
 				52702C5018E831860017F36D /* JSAAppDelegate.m in Sources */,
 				52702C5618E831860017F36D /* JSAViewController.m in Sources */,
 				398768371A96FEDC004E8EC5 /* JSACLayerFinder.m in Sources */,

@@ -142,7 +142,7 @@ static NSString * const kJSACollectionModelParentPrefix = @"MODEL_PARENT_%@";
     return [self.keyDictionary allKeys];
 }
 
-- (nonnull id)objectForDictionary:(nonnull id<KeyValueAccessible>)dictionary forCollectionSerializer:(nonnull JSACCollectionSerializer *)serializer {
+- (nullable id)objectForDictionary:(nonnull id<KeyValueAccessible>)dictionary forCollectionSerializer:(nonnull JSACCollectionSerializer *)serializer {
     NSDictionary *userInfo;
     if (self.dateFormatter) {
         userInfo = @{ JSACUserInfoDateFormatterKey : self.dateFormatter };

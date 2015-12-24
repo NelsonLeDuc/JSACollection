@@ -18,11 +18,11 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 Add this to your Podfile for Objective-C:
 
-	pod 'JSACollection', '~> 1.6.0.beta'
+	pod 'JSACollection', '~> 1.6.0.beta2'
 
 Or this for Swift:
 
-    pod 'JSACollection/Swift', '~> 1.6.0.beta'
+    pod 'JSACollection/Swift', '~> 1.6.0.beta2'
 
 Then run:
 	
@@ -37,7 +37,7 @@ Then run:
 Currently two top-level functions are provided to cover the majority of used functionality in a Swift-y way. There are as follows:
 ```swift
 func serializeObjects<C: SerializableContainer, T: NSObject>(container: C, type: T.Type = T.self, nonstandard: Bool = false) -> [T]
-func serializeObjects<C: SerializableContainer, M: JSACSerializableClassFactory>(container: C, mapper: M) -> [AnyObject]
+func serializeObjects<C: SerializableContainer, M: ClassSerializer>(container: C, mapper: M) -> [M.ObjectType]
 ```
 The first function has a few parameters for customization, but at its simplest it only requires a container (Dictionary or Array):
 ```swift
@@ -52,7 +52,7 @@ Finally you can determine if nonstandard types are supported through a separate 
 let objects: [Foo] = serializeObjects(["name": "bill"], nonstandard = true)
 ```
 
-The other function simply takes in a container and a mapper which conforms to the ```JSACSerializableClassFactory```, which behaves the same as before and still allows use of the ```JSACObjectMapper``` for whatever customization you need.
+The other function simply takes in a container and a mapper which conforms to the ```ClassSerializer``` protocol, which behaves almost exactly the same as ```JSACSerializableClassFactory``` and now a Swift-ified version of ```JSACObjectMapper``` is provided in the form of ```ObjectMapper``` which behaves almost identically to its Objective-C counterpart, except with nicer syntax and less casting needed.
 
 ### Automatic Class Serialization
 

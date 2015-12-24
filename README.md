@@ -16,15 +16,43 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 ### CocoaPods
 
-Add this to your Podfile:
+Add this to your Podfile for Objective-C:
 
-	pod 'JSACollection', '~> 1.5'
+	pod 'JSACollection', '~> 1.6.0.beta'
+
+Or this for Swift:
+
+    pod 'JSACollection/Swift', '~> 1.6.0.beta'
 
 Then run:
 	
 	pod install
 
 ## Getting Started
+
+### Swift Wrapper
+
+> For information on how the serialization works read the sections below, this is a basic explanation of the Swift wrapper.
+
+Currently two top-level functions are provided to cover the majority of used functionality in a Swift-y way. There are as follows:
+```swift
+func serializeObjects<C: SerializableContainer, T: NSObject>(container: C, type: T.Type = T.self, nonstandard: Bool = false) -> [T]
+func serializeObjects<C: SerializableContainer, M: JSACSerializableClassFactory>(container: C, mapper: M) -> [AnyObject]
+```
+The first function has a few parameters for customization, but at its simplest it only requires a container (Dictionary or Array):
+```swift
+let objects: [Foo] = serializeObjects(["name": "bill"])
+```
+Since the assignment is to an array of ```Foo``` the compiler can infer the type, if you this isn't possible in your situation you can pass in the type explicitly:
+```swift
+let objects = serializeObjects(["name": "bill"], type: Foo.self)
+```
+Finally you can determine if nonstandard types are supported through a separate optional parameter.
+```swift
+let objects: [Foo] = serializeObjects(["name": "bill"], nonstandard = true)
+```
+
+The other function simply takes in a container and a mapper which conforms to the ```JSACSerializableClassFactory```, which behaves the same as before and still allows use of the ```JSACObjectMapper``` for whatever customization you need.
 
 ### Automatic Class Serialization
 
@@ -157,7 +185,7 @@ The way that property names map to fields contained within the collection is as 
 
 ## Requirements
 
-JSACollection has only been tested for iOS 7.0+ but should be fully compatible with atleast iOS 6.
+JSACollection has only been tested for iOS 7.0+ but should be fully compatible with atleast iOS 6, except when using Swift which requires iOS 8.0+.
 
 ARC is required. For projects that don't use ARC, you can set the `-fobjc-arc` compiler flag on the relevant files.
 

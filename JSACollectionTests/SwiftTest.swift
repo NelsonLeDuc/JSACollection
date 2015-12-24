@@ -76,17 +76,16 @@ class SwiftTest: XCTestCase {
     
     // MARK: - Object Mapper
     func testGenerateFromClassSubMapper() {
-        let mapper = JSACObjectMapper(forClass: JSATestModelObject.self)
-        mapper.allowNonStandardTypes = true
-        let subMapper = JSACObjectMapper(forClass: JSASubTestModelObject.self)
+        let mapper = ObjectMapper(JSATestModelObject.self)
+        mapper.allowNonStandard = true
+        let subMapper = ObjectMapper(JSASubTestModelObject.self)
         subMapper.setterBlock = { (dict, object) in
-            let subObject = object as! JSASubTestModelObject
-            subObject.homeName = "My Fave"
-            return subObject
+            object.homeName = "My Fave"
+            return object
         }
-        mapper.addSubObjectMapper(subMapper, forPropertyName: "bestHome")
+        mapper.addSubMapper("bestHome", mapper: subMapper)
         
-        let models = serializeObjects(testCollection, mapper: mapper) as! [JSATestModelObject]
+        let models = serializeObjects(testCollection, mapper: mapper)
         XCTAssertEqual(models.count, 2);
         let model = models.first
         XCTAssertEqual(model?.nameString, "Bob Jones")

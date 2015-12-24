@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Swift' do |sw|
+    sw.ios.deployment_target = '8.0'
     sw.source_files = "JSACollection/Classes/Public/Swift/**"
     sw.dependency 'JSACollection/Core'
   end

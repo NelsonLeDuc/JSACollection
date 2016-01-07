@@ -161,7 +161,7 @@
 				3996FDC51C3E0B7C0005F380 /* JSACNodeList.h */,
 				3996FDC61C3E0B7C0005F380 /* JSACNodeList.m */,
 			);
-			name = Tree;
+			path = Tree;
 			sourceTree = "<group>";
 		};
 		398768111A96FEDC004E8EC5 /* Classes */ = {
@@ -176,8 +176,8 @@
 		398768121A96FEDC004E8EC5 /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				395321831C2E733500C5F7B5 /* Tree */,
 				398768131A96FEDC004E8EC5 /* Category */,
+				395321831C2E733500C5F7B5 /* Tree */,
 				398768221A96FEDC004E8EC5 /* JSACKeyGenerator.h */,
 				398768231A96FEDC004E8EC5 /* JSACKeyGenerator.m */,
 				F854F6E71BEF120500BCA8EE /* JSACUtility.h */,

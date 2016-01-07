@@ -1,5 +1,5 @@
 //
-//  NSArray+ContainsString.h
+//  NSArray+JSACAdditions.h
 //  JSADataExample
 //
 //  Created by Nelson LeDuc on 8/3/13.
@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSArray (ContainsString)
+@interface NSArray (JSACAdditions)
 
 - (BOOL)jsac_containsString:(NSString*)string;
 - (BOOL)jsac_containsString:(NSString *)string ignoreCase:(BOOL)ignoreCase;
+- (NSArray *)jsac_flattenedArray;
 
 @end

@@ -11,7 +11,7 @@
 #import "JSACCollectionSerializer.h"
 #import "JSACUtility.h"
 
-#import "NSArray+ContainsString.h"
+#import "NSArray+JSACAdditions.h"
 #import "NSObject+ListOfProperties.h"
 #import "NSDictionary+JSACAdditions.h"
 

@@ -8,15 +8,10 @@
 
 #import "JSACCollectionSerializer.h"
 #import "JSACSerializableClassFactory.h"
-#import "JSACCollectionFactory.h"
-#import "JSACLayerFinder.h"
 #import "JSACObjectMapper.h"
 
-@interface NSObject (JSACollectionCategory)
-
-+ (NSDictionary *)JSONKeyMapping;
-
-@end
+#import "JSACNode.h"
+#import "JSACNodeList.h"
 
 @implementation JSACCollectionSerializer
 
@@ -57,22 +52,15 @@
 
 - (NSArray *)generateModelObjectsWithSerializableClassFactory:(id<JSACSerializableClassFactory>)serializableClassFactory fromContainer:(id)container
 {
-    NSArray *keyList;
-    keyList = [serializableClassFactory listOfKeys];
+    NSArray *keyList = [serializableClassFactory listOfKeys];
+    JSACNodeList *nodeList = [[JSACNode nodeWithContainer:container] nodesMatchingKeys:keyList];
+    NSMutableArray *modelObjectArray = [NSMutableArray array];
     
-    id modelContainer = [JSACLayerFinder modelContainerWithProperties:keyList fromContainer:container];
-    modelContainer = [JSACCollectionFactory generateUsableCollectionFromCollection:modelContainer];
-    
-    id modelObject;
-    
-    NSMutableArray *modelObjectArray = [[NSMutableArray alloc] init];
-    
-    for (id model in modelContainer)
+    for (JSACNode *node in nodeList.nodes)
     {
-        modelObject = [serializableClassFactory objectForDictionary:model forCollectionSerializer:self];
-        
-        if (modelObject)
-        {
+        id modelObject = [serializableClassFactory objectForDictionary:[node actualStorage] forCollectionSerializer:self];
+   
+        if (modelObject) {
             [modelObjectArray addObject:modelObject];
         }
     }

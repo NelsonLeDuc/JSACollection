@@ -1,14 +1,14 @@
 //
-//  NSArray+ContainsString.m
+//  NSArray+JSACAdditions.m
 //  JSADataExample
 //
 //  Created by Nelson LeDuc on 8/3/13.
 //  Copyright (c) 2013 Jump Space Apps. All rights reserved.
 //
 
-#import "NSArray+ContainsString.h"
+#import "NSArray+JSACAdditions.h"
 
-@implementation NSArray (ContainsString)
+@implementation NSArray (JSACAdditions)
 
 - (BOOL)jsac_containsString:(NSString *)string
 {
@@ -33,6 +33,21 @@
     }
     
     return NO;
+}
+
+- (NSArray *)jsac_flattenedArray
+{
+    NSMutableArray *flattened = [NSMutableArray array];
+    for (id obj in self)
+    {
+        if ([obj isKindOfClass:[NSArray class]]) {
+            [flattened addObjectsFromArray:[(NSArray *)obj jsac_flattenedArray]];
+        } else {
+            [flattened addObject:obj];
+        }
+    }
+    
+    return [flattened copy];
 }
 
 @end

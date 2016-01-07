@@ -10,10 +10,16 @@
 
 @class JSACCollectionSerializer;
 
+@protocol KeyValueAccessible <NSObject>
+
+- (nullable id)valueForKey:(nonnull NSString *)key;
+
+@end
+
 @protocol JSACSerializableClassFactory <NSObject>
 @required
 
-- (NSArray *)listOfKeys;
-- (id)objectForDictionary:(NSDictionary *)dictionary forCollectionSerializer:(JSACCollectionSerializer *)serializer;
+- (nonnull NSArray *)listOfKeys;
+- (nullable id)objectForDictionary:(nonnull id<KeyValueAccessible>)dictionary forCollectionSerializer:(nonnull JSACCollectionSerializer *)serializer;
 
 @end

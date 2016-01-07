@@ -18,11 +18,11 @@ JSACollection is framework for converting collections (i.e. dictionaries, and ar
 
 Add this to your Podfile for Objective-C:
 
-	pod 'JSACollection', '~> 1.6.0.beta2'
+	pod 'JSACollection', '~> 1.6.0'
 
 Or this for Swift:
 
-    pod 'JSACollection/Swift', '~> 1.6.0.beta2'
+    pod 'JSACollection/Swift', '~> 1.6.0'
 
 Then run:
 	

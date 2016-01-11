@@ -13,11 +13,11 @@
 @interface JSACNode : NSObject
 
 @property (nonatomic, strong) id actualStorage;
-@property (nonatomic, strong) NSArray *keys;
-@property (nonatomic, strong) NSMutableArray *subNodes;
+@property (nonatomic, strong) NSArray<NSString *> *keys;
+@property (nonatomic, strong) NSMutableArray<JSACNode *> *subNodes;
 
 - (instancetype)initWithContainer:(id)container;
-- (JSACNodeList *)nodesMatchingKeys:(NSArray *)keys;
+- (JSACNodeList *)nodesMatchingKeys:(NSArray<NSString *> *)keys;
 
 + (instancetype)nodeWithContainer:(id)container;
 

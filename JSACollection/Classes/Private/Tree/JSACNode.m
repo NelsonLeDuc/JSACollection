@@ -13,8 +13,7 @@
 @implementation JSACNode
 
 #pragma mark - Public Methods
-- (instancetype)initWithContainer:(id)container
-{
+- (instancetype)initWithContainer:(id)container {
     self = [super init];
     if (self) {
         
@@ -37,22 +36,19 @@
     return self;
 }
 
-- (JSACNodeList *)nodesMatchingKeys:(NSArray *)keys
-{
+- (JSACNodeList *)nodesMatchingKeys:(NSArray<NSString *> *)keys {
     NSArray *matched = [self matchedNodesForKeys:keys];
     JSACNodeList *nodeList = [[JSACNodeList alloc] initWithNodes:matched];
     
     return nodeList;
 }
 
-+ (instancetype)nodeWithContainer:(id)container
-{
++ (instancetype)nodeWithContainer:(id)container {
     return [[self alloc] initWithContainer:container];
 }
 
 #pragma mark - Setters / Getters
-- (NSMutableArray *)subNodes
-{
+- (NSMutableArray<JSACNode *> *)subNodes {
     if (!_subNodes) {
         _subNodes = [NSMutableArray array];
     }
@@ -61,8 +57,7 @@
 }
 
 #pragma mark - Private Methods
-- (NSArray *)matchedNodesForKeys:(NSArray *)keys
-{
+- (NSArray *)matchedNodesForKeys:(NSArray<NSString *> *)keys {
     NSArray *nodeKeys = [self isArray] ? [(JSACNode *)self.subNodes.firstObject keys] : self.keys;
     BOOL match = NO;
     for (NSString *key in nodeKeys)
@@ -98,10 +93,30 @@
     return self.keys == nil;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
+    return [self treeStringWithPrefix:@"" last:YES];
+}
+
+- (NSString *)treeStringWithPrefix:(NSString *)prefix last:(BOOL)last {
+    NSMutableString *indent = [prefix mutableCopy];
+    NSMutableString *treeString = [prefix mutableCopy];
+    if (last) {
+        [treeString appendString:@"\\-"];
+        [indent appendString:@"  "];
+    } else {
+        [treeString appendString:@"|-"];
+        [indent appendString:@"| "];
+    }
     NSString *type = [self isArray] ? @"Array" : @"Object";
-    return [NSString stringWithFormat:@"%@ %@", [super description], type];
+    [treeString appendString:type];
+    [treeString appendFormat:@" %p", self];
+    [treeString appendString:@"\n"];
+    
+    [self.subNodes enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [treeString appendString:[obj treeStringWithPrefix:indent last:idx == self.subNodes.count - 1]];
+    }];
+    
+    return [treeString copy];
 }
 
 @end

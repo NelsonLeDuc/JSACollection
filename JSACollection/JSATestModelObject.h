@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSArray *homes;
 @property (nonatomic, strong) JSASubTestModelObject *bestHome;
 @property (nonatomic, strong) NSString *unused;
+@property (nonatomic, strong) NSString *jsc_id;
 
 @end
 

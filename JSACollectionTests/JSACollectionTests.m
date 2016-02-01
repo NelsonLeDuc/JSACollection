@@ -62,6 +62,7 @@
     JSATestModelObject *model = [models firstObject];
     XCTAssertEqualObjects([model nameString], @"Bob Jones");
     XCTAssertEqualObjects([[model testURL] absoluteString], @"http://www.google.com");
+    XCTAssertEqualObjects([model jsc_id], @"test id");
     
     NSArray *modelNumArray = [model randomArray];
     XCTAssertEqual([modelNumArray count], 3);

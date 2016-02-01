@@ -48,8 +48,8 @@ static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
             keyDict[firstWord] = propertyName;
         }
         
-        NSString *underscores = [regexp stringByReplacingMatchesInString:propertyName options:0 range:NSMakeRange(0, propertyName.length) withTemplate:@"$1_$2"];
-        NSString *dashes = [regexp stringByReplacingMatchesInString:propertyName options:0 range:NSMakeRange(0, propertyName.length) withTemplate:@"$1-$2"];
+        NSString *underscores = [regexp stringByReplacingMatchesInString:prop options:0 range:NSMakeRange(0, prop.length) withTemplate:@"$1_$2"];
+        NSString *dashes = [regexp stringByReplacingMatchesInString:prop options:0 range:NSMakeRange(0, prop.length) withTemplate:@"$1-$2"];
         if (underscores) {
             keyDict[underscores] = propertyName;
         }
@@ -57,7 +57,7 @@ static NSString * const kJSACollectionPropertyPrefix = @"jsc_";
             keyDict[dashes] = propertyName;
         }
         
-        keyDict[propertyName] = propertyName;
+        keyDict[prop] = propertyName;
     }
     
     return [keyDict copy];

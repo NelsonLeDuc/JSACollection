@@ -138,12 +138,80 @@ NSString * const JSACUserInfoDateFormatterKey = @"dateFormatter";
         }
         else
         {
-            [self setValue:value forKey:key];
+            Class expectedClazz = [self classForPropertyKey:key];
+            
+            if (expectedClazz == nil) {
+                expectedClazz = [[self valueForKey:key] class];
+            }
+            
+            if ([value isKindOfClass:[NSString class]] && (expectedClazz == [NSNumber class] || [expectedClazz isSubclassOfClass:[NSNumber class]])) {
+                NSNumber *convetedValue = [self convertStringToNumber:value key:key class:expectedClazz];
+                [self setValue:convetedValue forKey:key];
+            } else if ([value isKindOfClass:[NSNumber class]] && (expectedClazz == [NSString class] || [expectedClazz isSubclassOfClass:[NSString class]])) {
+                NSString *convertedValue = [value stringValue];
+                [self setValue:convertedValue forKey:key];
+            } else {
+                [self setValue:value forKey:key];
+            }
         }
         return YES;
     }
     
     return NO;
+}
+
+- (NSNumber *)convertStringToNumber:(NSString *)value key:(NSString *)key class:(Class)clazz {
+    NSNumber *defaultValue = [self valueForKey:key];
+    
+    // If the default Value is not nil, we are coming from swift and can infer the type based on that value
+    if (defaultValue != nil) {
+        CFNumberType numberType = CFNumberGetType((CFNumberRef)defaultValue);
+        
+        if (numberType == kCFNumberSInt8Type ||
+            numberType == kCFNumberSInt16Type ||
+            numberType == kCFNumberSInt32Type ||
+            numberType == kCFNumberSInt64Type ||
+            numberType == kCFNumberIntType) {
+            return [NSNumber numberWithInt:[value intValue]];
+        } else if (numberType == kCFNumberFloat32Type ||
+                   numberType == kCFNumberFloat64Type ||
+                   numberType == kCFNumberFloatType) {
+            return [NSNumber numberWithFloat:[value floatValue]];
+        } else if (numberType == kCFNumberDoubleType) {
+            return [NSNumber numberWithDouble:[value doubleValue]];
+        }
+        
+        return [NSNumber numberWithInt:0];
+    } else {
+        NSScanner *scanner = [NSScanner scannerWithString:value];\
+        
+        double doubleValue = 0.0;
+        int intValue = 0;
+        
+        BOOL hasDoubleValue = NO;
+        BOOL hasIntValue = NO;
+        
+        while (![scanner isAtEnd]) {
+            if ([scanner scanInt:&intValue]) {
+                hasIntValue = YES;
+                NSLog(@"%d", intValue);
+            } else if ([scanner scanDouble:&doubleValue]) {
+                hasDoubleValue = YES;
+                NSLog(@"%f", doubleValue);
+            }
+        }
+        
+        if (hasIntValue && hasDoubleValue) {
+            double convertedValue = intValue + doubleValue;
+            return [NSNumber numberWithDouble:convertedValue];
+        } else if (hasIntValue) {
+            return [NSNumber numberWithInt:intValue];
+        } else if (hasDoubleValue) {
+            return [NSNumber numberWithDouble:doubleValue];
+        }
+        
+        return [NSNumber numberWithInt:0];
+    }
 }
 
 #pragma mark - Private Methods

@@ -21,6 +21,8 @@
 @property (nonatomic, strong) JSASubTestModelObject *bestHome;
 @property (nonatomic, strong) NSString *unused;
 @property (nonatomic, strong) NSString *jsc_id;
+@property (nonatomic, strong) NSString *convertFromNumber;
+@property (nonatomic, strong) NSNumber *convertFromString;
 
 @end
 

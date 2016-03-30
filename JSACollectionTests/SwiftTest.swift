@@ -9,12 +9,21 @@
 import XCTest
 @testable import JSACollection
 
+class ConversionModel: NSObject {
+    var doubleAsString: Double = 0.0
+    var stringAsDouble: String = ""
+    var integerAsString: Int = 0
+    var stringAsInteger: String = ""
+    var numberAsString: NSNumber!
+}
+
 class SwiftTest: XCTestCase {
     
     var testCollection: NSDictionary!
     var topLevelCollection: NSDictionary!
     var middleCollection: NSDictionary!
     var parentTestCollection: NSDictionary!
+    var conversionCollection: NSDictionary!
     
     override func setUp() {
         super.setUp()
@@ -31,6 +40,9 @@ class SwiftTest: XCTestCase {
         
         let fourthJSON = NSData(contentsOfFile: bundle.pathForResource("test4", ofType: "json")!)!
         parentTestCollection = try! NSJSONSerialization.JSONObjectWithData(fourthJSON, options: []) as! NSDictionary
+        
+        let fifthJSON = NSData(contentsOfFile: bundle.pathForResource("testConversion", ofType: "json")!)!
+        conversionCollection = try! NSJSONSerialization.JSONObjectWithData(fifthJSON, options: []) as! NSDictionary
     }
     
     func testGenerateFromClass() {
@@ -102,6 +114,19 @@ class SwiftTest: XCTestCase {
         XCTAssertNotNil(model?.bestHome);
         XCTAssertNil(model?.unused);
         XCTAssertEqual(model!.bestHome.homeName, "My Fave");
+    }
+    
+    func testNumberConverstions() {
+        
+        let models = serializeObjects(conversionCollection, type: ConversionModel.self)
+        XCTAssertEqual(models.count, 1)
+        
+        let model = models.first!
+        XCTAssertEqual(model.doubleAsString, 10.01)
+        XCTAssertEqual(model.stringAsDouble, "10.01")
+        XCTAssertEqual(model.integerAsString, 12)
+        XCTAssertEqual(model.stringAsInteger, "12")
+        XCTAssertEqual(model.numberAsString, NSNumber(double: 10.01))
     }
     
 }

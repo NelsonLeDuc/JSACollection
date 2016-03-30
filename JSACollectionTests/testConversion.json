@@ -1,0 +1,12 @@
+{
+    "error" : "none",
+    "stuff" : [
+               {
+               "doubleAsString" : "10.01",
+               "stringAsDouble" : 10.01,
+               "integerAsString" : "12",
+               "stringAsInteger" : 12,
+               "numberAsString" : "10.01"
+               }
+    ]
+}

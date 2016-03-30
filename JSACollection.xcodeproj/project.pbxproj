@@ -24,6 +24,7 @@
 		39ABA0031A9A95C900892279 /* JSASubTestModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABA0021A9A95C900892279 /* JSASubTestModelObject.m */; };
 		39ABA0051A9EE5A000892279 /* test2.json in Resources */ = {isa = PBXBuildFile; fileRef = 39ABA0041A9EE5A000892279 /* test2.json */; };
 		39E97DE31AD4E78600D8BD0C /* test3.json in Resources */ = {isa = PBXBuildFile; fileRef = 39E97DE21AD4E78600D8BD0C /* test3.json */; };
+		39EC3A981CAC77B000CA8347 /* testConversion.json in Resources */ = {isa = PBXBuildFile; fileRef = 39EC3A971CAC77B000CA8347 /* testConversion.json */; };
 		39F2937C1B55F28A006D4CD8 /* JSATertiaryTestModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F2937B1B55F28A006D4CD8 /* JSATertiaryTestModelObject.m */; };
 		5234696318EA0EBA0072B094 /* JSATestModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5234696218EA0EBA0072B094 /* JSATestModelObject.m */; };
 		52702C4018E831860017F36D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52702C3F18E831860017F36D /* Foundation.framework */; };
@@ -87,6 +88,7 @@
 		39ABA0021A9A95C900892279 /* JSASubTestModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSASubTestModelObject.m; sourceTree = "<group>"; };
 		39ABA0041A9EE5A000892279 /* test2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test2.json; sourceTree = "<group>"; };
 		39E97DE21AD4E78600D8BD0C /* test3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test3.json; sourceTree = "<group>"; };
+		39EC3A971CAC77B000CA8347 /* testConversion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testConversion.json; sourceTree = "<group>"; };
 		39F2937A1B55F28A006D4CD8 /* JSATertiaryTestModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSATertiaryTestModelObject.h; sourceTree = "<group>"; };
 		39F2937B1B55F28A006D4CD8 /* JSATertiaryTestModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSATertiaryTestModelObject.m; sourceTree = "<group>"; };
 		5234696118EA0EBA0072B094 /* JSATestModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSATestModelObject.h; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				39ABA0041A9EE5A000892279 /* test2.json */,
 				39E97DE21AD4E78600D8BD0C /* test3.json */,
 				F854F6F01BEF2A7700BCA8EE /* test4.json */,
+				39EC3A971CAC77B000CA8347 /* testConversion.json */,
 			);
 			path = JSACollectionTests;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39ABA0051A9EE5A000892279 /* test2.json in Resources */,
+				39EC3A981CAC77B000CA8347 /* testConversion.json in Resources */,
 				39E97DE31AD4E78600D8BD0C /* test3.json in Resources */,
 				52702C6918E831870017F36D /* InfoPlist.strings in Resources */,
 				F854F6F11BEF2A7700BCA8EE /* test4.json in Resources */,

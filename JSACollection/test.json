@@ -4,12 +4,16 @@
                {
                "name" : "Bob Jones",
                "testURL" : "http://www.google.com",
-               "randomArray" : [ 1, 2, 3 ]
+               "randomArray" : [ 1, 2, 3 ],
+               "convertFromNumber": 123456,
+               "convertFromString": "123456"
                },
                {
                "name" : "Bob Jones",
                "testURL" : "http://www.google.com",
-               "randomArray" : [ 1, 2, 3 ]
+               "randomArray" : [ 1, 2, 3 ],
+               "convertFromNumber": 10.0643,
+               "convertFromString": "10.0643"
                }
                ]
 }
